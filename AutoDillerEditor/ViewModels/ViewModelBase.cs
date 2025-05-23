@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace AutoDillerEditor.ViewModels
+namespace AutoLandProcessor.ViewModels
 {
 	internal class ViewModelBase : ReactiveObject
 	{

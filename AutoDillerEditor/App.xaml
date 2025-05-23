@@ -1,15 +1,33 @@
-﻿<Application x:Class="AutoDillerEditor.App"
+﻿<Application x:Class="AutoLandProcessor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AutoDillerEditor">
+			 xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:local="clr-namespace:AutoLandProcessor">
     <Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-				<!-- Theme setting -->
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+				<ui:ThemeResources>
+					<ui:ThemeResources.ThemeDictionaries>
+						<ResourceDictionary x:Key="Light">
+							<ResourceDictionary.MergedDictionaries>
+								<ResourceDictionary Source="/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+							</ResourceDictionary.MergedDictionaries>
+						</ResourceDictionary>
+						<ResourceDictionary x:Key="Dark">
+							<ResourceDictionary.MergedDictionaries>
+								<ResourceDictionary Source="/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml" />
+							</ResourceDictionary.MergedDictionaries>
+						</ResourceDictionary>
+					</ui:ThemeResources.ThemeDictionaries>
+				</ui:ThemeResources>
+
+				<ui:MahAppsColorPaletteResources />
+				<ResourceDictionary Source="/MahApps.Metro;component/Styles/Fonts.xaml" />
+				<ResourceDictionary Source="/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
+
+				<ui:XamlControlsResources />
+				<ResourceDictionary Source="/ModernWpf.MahApps;component/Styles/Controls.xaml" />
+
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using AutoDillerEditor.ViewModels;
-using AutoDillerEditor.Views;
+﻿using Microsoft.Extensions.DependencyInjection;
+using AutoLandProcessor.ViewModels;
+using AutoLandProcessor.Views;
 
-namespace AutoDillerEditor.Services
+namespace AutoLandProcessor.Services
 {
 	internal static class ServiceCollectionExtensions
 	{

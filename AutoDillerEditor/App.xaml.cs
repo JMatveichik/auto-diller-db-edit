@@ -1,12 +1,12 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
-using AutoDillerEditor.Services;
-using AutoDillerEditor.ViewModels;
-using AutoDillerEditor.Views;
+using AutoLandProcessor.Services;
+using AutoLandProcessor.ViewModels;
+using AutoLandProcessor.Views;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AutoDillerEditor
+namespace AutoLandProcessor
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,6 +1,6 @@
 ﻿
 
-namespace AutoDillerEditor.ViewModels
+namespace AutoLandProcessor.ViewModels
 {
 	internal class MainWindowViewModel : ViewModelBase
 	{
