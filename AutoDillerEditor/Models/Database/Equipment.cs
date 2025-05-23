@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_equipments")]
-	public class Equipment
+	internal class Equipment
 	{
 		[Key]
 		[Column("e_auto_id")]
@@ -26,7 +26,7 @@ namespace AutoLandProcessor.Models
 		[Required]
 		[Column("e_engine_name")]
 		[MaxLength(70)]
-		public string EngineName { get; set; }
+		public string? EngineName { get; set; }
 
 		[Column("e_engine_id")]
 		public int EngineTypeId { get; set; }
@@ -55,12 +55,12 @@ namespace AutoLandProcessor.Models
 		[Required]
 		[Column("e_interior")]
 		[MaxLength(70)]
-		public string Interior { get; set; }
+		public string? Interior { get; set; }
 
 		[Required]
 		[Column("e_body_kit")]
 		[MaxLength(70)]
-		public string BodyKit { get; set; }
+		public string? BodyKit { get; set; }
 
 		[Column("e_weight")]
 		public int Weight { get; set; }
@@ -70,10 +70,10 @@ namespace AutoLandProcessor.Models
 
 		[Column("e_image")]
 		[MaxLength(255)]
-		public string Image { get; set; }
+		public string? Image { get; set; }
 
 		[ForeignKey("AutoId")]
-		public Automobile Automobile { get; set; }
+		public Automobile? Automobile { get; set; }
 
 
 	}

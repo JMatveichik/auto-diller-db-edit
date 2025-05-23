@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_automobiles")]
-	public class Automobile
+	internal class Automobile
 	{
 		[Key]
 		[Column("a_id")]
@@ -25,7 +25,7 @@ namespace AutoLandProcessor.Models
 		public int BodyTypeId { get; set; }
 
 		[ForeignKey("BodyTypeId")]
-		public BodyType BodyType { get; set; }
+		public BodyType? BodyType { get; set; }
 
 		[Column("a_place_count")]
 		public byte PlaceCount { get; set; }

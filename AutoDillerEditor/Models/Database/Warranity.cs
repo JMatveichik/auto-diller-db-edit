@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_warranties")]
-	public class Warranty
+	internal class Warranty
 	{
 		[Key]
 		[Column("w_id")]
@@ -19,7 +19,7 @@ namespace AutoLandProcessor.Models
 		[Required]
 		[Column("w_name")]
 		[MaxLength(50)]
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		[Column("w_duration")]
 		public int Duration { get; set; }

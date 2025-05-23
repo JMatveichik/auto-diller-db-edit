@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_contracts")]
-	public class Contract
+	internal class Contract
 	{
 		[Key]
 		[Column("c_id")]
@@ -35,19 +35,19 @@ namespace AutoLandProcessor.Models
 		public DateTime ContractDate { get; set; } = DateTime.Now;
 
 		[ForeignKey("UserId")]
-		public User User { get; set; }
+		public User? User { get; set; }
 
 		[ForeignKey("DealerId")]
-		public Dealer Dealer { get; set; }
+		public Dealer? Dealer { get; set; }
 
 		[ForeignKey("AutoId")]
-		public Automobile Automobile { get; set; }
+		public Automobile? Automobile { get; set; }
 
 		[ForeignKey("AutoId, EquipmentId")]
-		public Equipment Equipment { get; set; }
+		public Equipment? Equipment { get; set; }
 
 		[ForeignKey("WarrantyId")]
-		public Warranty Warranty { get; set; }
+		public Warranty? Warranty { get; set; }
 
 	}
 }

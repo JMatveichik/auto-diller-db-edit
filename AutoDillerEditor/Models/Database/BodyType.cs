@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_body_type")]
-	public class BodyType
+	internal class BodyType
 	{
 		[Key]
 		[Column("bt_id")]
@@ -19,7 +19,7 @@ namespace AutoLandProcessor.Models
 		[Required]
 		[Column("bt_name")]
 		[MaxLength(50)]
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		public ICollection<Automobile> Automobiles { get; set; } = new List<Automobile>();
 	}
