@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoLandProcessor.Services
 {
-	internal class UserService : DatabaseServiceBase ,IUserService
+	internal class UserService : DatabaseServiceBase , IUserService
 	{
 
 		public UserService(AppDatabaseContext context) : base(context) { }
@@ -13,6 +13,19 @@ namespace AutoLandProcessor.Services
 		public async Task<IEnumerable<User>> GetAllUsersAsync()
 		{
 			return await _context.Users.ToListAsync();
+		}
+
+		public async Task<User> LoginUser(User user)
+		{
+			if (string.IsNullOrEmpty(user.Login) || string.IsNullOrEmpty(user.Password))
+			{
+				return null;
+			}
+
+			var foundUser = await _context.Users
+				.FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password);
+
+			return foundUser;
 		}
 
 		public async Task<User> GetUserByIdAsync(int id)

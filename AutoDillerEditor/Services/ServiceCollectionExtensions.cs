@@ -23,6 +23,7 @@ namespace AutoLandProcessor.Services
 			services.AddSingleton<UsersView>();
 			services.AddSingleton<AutomobilesView>();
 			services.AddSingleton<ContractsView>();
+			services.AddSingleton<LoginDialog>();
 
 			//register viewmodels
 			services.AddSingleton<MainWindowViewModel>();
@@ -30,6 +31,7 @@ namespace AutoLandProcessor.Services
 			services.AddSingleton<AutomobilesViewModel>();
 			services.AddSingleton<DealersViewModel>();
 			services.AddSingleton<ContractsViewModel>();
+			services.AddSingleton<LoginViewModel>();
 
 			//register services
 			services.AddScoped<IUserService, UserService>();

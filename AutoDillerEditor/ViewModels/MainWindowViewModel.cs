@@ -1,9 +1,16 @@
-﻿
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+
+using AutoLandProcessor.Models;
 
 namespace AutoLandProcessor.ViewModels
 {
 	internal class MainWindowViewModel : ViewModelBase
 	{
+
+		[Reactive]
+		public User CurrentUser { get; set; }
+
 		public UsersViewModel UsersViewModel { get; private set; }
 
 		public AutomobilesViewModel AutomobilesViewModel{ get; private set; }
@@ -15,12 +22,14 @@ namespace AutoLandProcessor.ViewModels
 		public MainWindowViewModel(	UsersViewModel usersViewModel,
 									AutomobilesViewModel automobilesViewModel,
 									DealersViewModel deallersViewModel,
-									ContractsViewModel contractsViewModel)
+									ContractsViewModel contractsViewModel,
+									User user)
 		{
-			UsersViewModel = usersViewModel;
+			UsersViewModel		 = usersViewModel;
 			AutomobilesViewModel = automobilesViewModel;
-			DealersViewModel = deallersViewModel;
-			ContractsViewModel = contractsViewModel;
+			DealersViewModel	 = deallersViewModel;
+			ContractsViewModel   = contractsViewModel;
+			CurrentUser = user;
 		}
 	}
 }
