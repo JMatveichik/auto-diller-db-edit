@@ -7,8 +7,7 @@ namespace AutoLandProcessor.Services
 	{
 		Task<IEnumerable<User>> GetAllUsersAsync();
 
-		Task<User?> LoginUser(User user );
-
+		Task<User?> LoginUser(string login, string password );
 		Task<User?> GetUserByIdAsync(int id);
 		Task<User?> GetUserByLoginAsync(string login);
 

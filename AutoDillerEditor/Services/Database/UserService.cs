@@ -6,24 +6,22 @@ namespace AutoLandProcessor.Services
 {
 	internal class UserService : DatabaseServiceBase , IUserService
 	{
-
 		public UserService(AppDatabaseContext context) : base(context) { }
-
 
 		public async Task<IEnumerable<User>> GetAllUsersAsync()
 		{
 			return await _context.Users.ToListAsync();
 		}
 
-		public async Task<User?> LoginUser(User user)
+		public async Task<User?> LoginUser(string login, string password)
 		{
-			if (string.IsNullOrEmpty(user.Login) || string.IsNullOrEmpty(user.Password))
+			if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
 			{
 				return null;
 			}
 
 			var foundUser = await _context.Users
-				.FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password);
+				.FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
 
 			return foundUser;
 		}

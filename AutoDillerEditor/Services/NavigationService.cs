@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using AutoLandProcessor.Views;
+using AutoLandProcessor.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoLandProcessor.Services
@@ -12,36 +8,19 @@ namespace AutoLandProcessor.Services
 	internal class NavigationService : INavigationService
 	{
 		private readonly IServiceProvider _serviceProvider;
-		private LoginDialog? _loginDialog;
 
 		public NavigationService(IServiceProvider serviceProvider)
 		{
 			_serviceProvider = serviceProvider;
 		}
 
-		public void ShowLoginDialog()
+		public async Task<User?> ShowLoginDialogAsync()
 		{
-			Application.Current.Dispatcher.Invoke(() =>
-			{
-				_loginDialog = _serviceProvider.GetRequiredService<LoginDialog>();
-				_loginDialog.Owner = Application.Current.MainWindow;
-				_loginDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-				_loginDialog.ShowDialog();
-			});
-		}
+			var loginDialog = _serviceProvider.GetRequiredService<LoginDialog>();
+			loginDialog.Owner = Application.Current.MainWindow;
+			loginDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-		public void CloseLoginDialog()
-		{
-			Application.Current.Dispatcher.Invoke(() =>
-			{
-				_loginDialog?.Close();
-				_loginDialog = null;
-			});
-		}
-
-		public void ShowMainView()
-		{
-			throw new NotImplementedException();
+			return await Task.Run(() => loginDialog.ShowDialog() == true);
 		}
 	}
 }
