@@ -19,18 +19,19 @@ namespace AutoLandProcessor.ViewModels
 		public IEnumerable<Automobile> Automobiles { get; private set; } = Enumerable.Empty<Automobile>();
 
 
-		public AutomobilesViewModel(IAutomobileService automobileService) : base()
+		public AutomobilesViewModel(IAutomobileService automobileService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_automobileService = automobileService;
-
-			// Автоматическая загрузка при инициализации
-			LoadAsync().ConfigureAwait(false);
-
 		}
 
 		protected override async Task LoadAsync()
 		{
 			Automobiles = await _automobileService.GetAllAutomobilesAsync();
+		}
+
+		protected override void UpdateUIForUser(User? user)
+		{
+			LoadAsync().ConfigureAwait(false);
 		}
 	}
 }

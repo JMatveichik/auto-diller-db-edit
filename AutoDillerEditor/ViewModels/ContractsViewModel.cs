@@ -16,15 +16,18 @@ namespace AutoLandProcessor.ViewModels
 		[Reactive]
 		public IEnumerable<Contract> Contracts { get; private set; } = Enumerable.Empty<Contract>();
 
-		public ContractsViewModel(IContractService contractService) : base()
+		public ContractsViewModel(IContractService contractService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_contractService = contractService;
-			LoadAsync().ConfigureAwait(false);
-
 		}
 		protected override async Task LoadAsync()
 		{
 			Contracts = await _contractService.GetAllContractsAsync();
+		}
+
+		protected override void UpdateUIForUser(User? user)
+		{
+			LoadAsync().ConfigureAwait(false);
 		}
 	}
 }

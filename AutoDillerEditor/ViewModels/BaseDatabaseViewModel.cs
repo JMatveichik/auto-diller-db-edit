@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using AutoLandProcessor.Services;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace AutoLandProcessor.ViewModels
 	{
 		public ReactiveCommand<Unit, Unit> Load { get; private set; }
 
-		public BaseDatabaseViewModel()
+		public BaseDatabaseViewModel(IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			Load = ReactiveCommand.CreateFromTask(LoadAsync);
 		}

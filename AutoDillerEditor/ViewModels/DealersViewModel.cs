@@ -12,7 +12,7 @@ namespace AutoLandProcessor.ViewModels
 		[Reactive]
 		public IEnumerable<Dealer> Dealers { get; private set; } = Enumerable.Empty<Dealer>();
 
-		public DealersViewModel(IDealerService dealerService) : base()
+		public DealersViewModel(IDealerService dealerService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_dealerService = dealerService;
 			// Автоматическая загрузка при инициализации
@@ -23,6 +23,11 @@ namespace AutoLandProcessor.ViewModels
 		protected override async Task LoadAsync()
 		{
 			Dealers = await _dealerService.GetAllDealersAsync();
+		}
+
+		protected override void UpdateUIForUser(User? user)
+		{
+			LoadAsync().ConfigureAwait(false);
 		}
 	}
 }

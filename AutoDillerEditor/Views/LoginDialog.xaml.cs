@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoLandProcessor.Services;
+using AutoLandProcessor.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,23 @@ namespace AutoLandProcessor.Views
 	/// <summary>
 	/// Interaction logic for LoginDialog.xaml
 	/// </summary>
-	public partial class LoginDialog : Window
+	internal partial class LoginDialog : Window
 	{
-		public LoginDialog()
+		public LoginDialog(LoginViewModel viewModel, INavigationService navigationService, IAppLoginStateService appState)
 		{
 			InitializeComponent();
+			DataContext = viewModel;
+
+			WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+			viewModel.LoginCommand.Subscribe(user =>
+			{
+				if (user != null)
+				{
+					appState.CurrentUser = user;
+					navigationService.CloseLoginDialog();
+				}
+			});
 		}
 	}
 }

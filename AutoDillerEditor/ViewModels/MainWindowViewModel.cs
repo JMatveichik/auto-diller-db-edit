@@ -2,14 +2,15 @@
 using ReactiveUI.Fody.Helpers;
 
 using AutoLandProcessor.Models;
+using AutoLandProcessor.Services;
+using System.Net.NetworkInformation;
 
 namespace AutoLandProcessor.ViewModels
 {
 	internal class MainWindowViewModel : ViewModelBase
 	{
+		private readonly INavigationService _navigationService;
 
-		[Reactive]
-		public User CurrentUser { get; set; }
 
 		public UsersViewModel UsersViewModel { get; private set; }
 
@@ -23,13 +24,21 @@ namespace AutoLandProcessor.ViewModels
 									AutomobilesViewModel automobilesViewModel,
 									DealersViewModel deallersViewModel,
 									ContractsViewModel contractsViewModel,
-									User user)
+									INavigationService navigationService,
+									IAppLoginStateService appLoginStateService) :
+									base(appLoginStateService)
 		{
 			UsersViewModel		 = usersViewModel;
 			AutomobilesViewModel = automobilesViewModel;
 			DealersViewModel	 = deallersViewModel;
 			ContractsViewModel   = contractsViewModel;
-			CurrentUser = user;
+
+			_navigationService = navigationService;
+		}
+
+		protected override void UpdateUIForUser(User? user)
+		{
+
 		}
 	}
 }

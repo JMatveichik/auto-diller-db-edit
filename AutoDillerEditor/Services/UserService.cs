@@ -15,7 +15,7 @@ namespace AutoLandProcessor.Services
 			return await _context.Users.ToListAsync();
 		}
 
-		public async Task<User> LoginUser(User user)
+		public async Task<User?> LoginUser(User user)
 		{
 			if (string.IsNullOrEmpty(user.Login) || string.IsNullOrEmpty(user.Password))
 			{
@@ -28,12 +28,12 @@ namespace AutoLandProcessor.Services
 			return foundUser;
 		}
 
-		public async Task<User> GetUserByIdAsync(int id)
+		public async Task<User?> GetUserByIdAsync(int id)
 		{
 			return await _context.Users.FindAsync(id);
 		}
 
-		public async Task<User> GetUserByLoginAsync(string login)
+		public async Task<User?> GetUserByLoginAsync(string login)
 		{
 			return await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
 		}

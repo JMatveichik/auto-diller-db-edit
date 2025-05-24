@@ -4,6 +4,8 @@ using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
 using System.Windows.Input;
 using System.Reactive;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoLandProcessor.ViewModels
 {
@@ -17,39 +19,41 @@ namespace AutoLandProcessor.ViewModels
 		[Reactive]
 		public string Password { get; set; } = string.Empty;
 
-
 		[Reactive]
 		public string ErrorMessage { get; set; } = string.Empty;
 
-		public ReactiveCommand<Unit, Unit> LoginCommand { get; }
+		public ReactiveCommand<Unit, User?> LoginCommand { get; }
 
-		public LoginViewModel(IUserService userService)
+		public LoginViewModel(IUserService userService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
-			_userService = userService ?? throw new ArgumentNullException(nameof(userService));
+			_userService = userService ??
+				throw new ArgumentNullException(nameof(userService));
+
 			LoginCommand = ReactiveCommand.CreateFromTask (ExecuteLogin);
 		}
 
-		private async Task ExecuteLogin()
+		private async Task<User?> ExecuteLogin()
 		{
-			ErrorMessage = string.Empty;
-
 			if (string.IsNullOrEmpty(Login) || string.IsNullOrEmpty(Password))
 			{
-				ErrorMessage = "Логин и пароль обязательны для заполнения";
-				return;
+				ErrorMessage = "Логин и пароль обязательны";
+				return null;
 			}
 
-			var user = new User { Login = Login, Password = Password };
-			var authenticatedUser = await _userService.LoginUser(user);
-
-			if (authenticatedUser == null)
+			try
 			{
-				ErrorMessage = "Неверный логин или пароль";
-				return;
+				return await _userService.LoginUser(new User { Login = Login, Password = Password });
 			}
+			catch (Exception ex)
+			{
+				ErrorMessage = $"Ошибка входа: {ex.Message}";
+				return null;
+			}
+		}
 
-			// Здесь можно перейти к главному окну приложения
-			// Например, через Messenger или NavigationService
+		protected override void UpdateUIForUser(User? user)
+		{
+
 		}
 	}
 }

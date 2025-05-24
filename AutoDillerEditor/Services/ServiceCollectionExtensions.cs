@@ -38,6 +38,8 @@ namespace AutoLandProcessor.Services
 			services.AddScoped<IAutomobileService, AutomobileService>();
 			services.AddScoped<IDealerService, DealerService>();
 			services.AddScoped<IContractService, ContractService>();
+			services.AddSingleton<INavigationService, NavigationService>();
+			services.AddSingleton<IAppLoginStateService, AppLoginStateService>();
 
 			return services;
 		}

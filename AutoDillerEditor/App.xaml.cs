@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 using AutoLandProcessor.Services;
@@ -8,12 +9,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoLandProcessor
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
+	/// <summary>
+	/// Interaction logic for App.xaml
+	/// </summary>
+	public partial class App : Application
+	{
 		public ServiceProvider? ServiceProvider { get; private set; }
+
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
@@ -28,7 +30,12 @@ namespace AutoLandProcessor
 			Application.Current.MainWindow = mainWindow;
 
 			mainWindow.Show();
+
+			/*
+			var loginWindow = ServiceProvider.GetRequiredService<LoginDialog>();
+			loginWindow.Show();
+			*/
+
 		}
 	}
-
 }

@@ -14,17 +14,20 @@ namespace AutoLandProcessor.ViewModels
 		public IEnumerable<User> Users { get; private set; } = Enumerable.Empty<User>();
 
 
-		public UsersViewModel(IUserService userService) : base()
+		public UsersViewModel(IUserService userService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_userService = userService;
-			// Автоматическая загрузка при инициализации
 			LoadAsync().ConfigureAwait(false);
-
 		}
 
 		protected override async Task LoadAsync()
 		{
 			Users = await _userService.GetAllUsersAsync();
+		}
+
+		protected override void UpdateUIForUser(User? user)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
