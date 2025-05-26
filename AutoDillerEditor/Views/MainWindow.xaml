@@ -13,33 +13,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-	<Window.Resources>
-		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<ContentControl Content="{Binding CurrentView}"/>
 
-		<DataTemplate x:Key="NavigationViewHeaderTemplate">
-			<TextBlock Text="{Binding}" Margin="12,32,0,0" />
-		</DataTemplate>
-
-	</Window.Resources>
-
-	<Grid>
-		<TabControl>
-			<TabItem Header="USERS">
-				<views:UsersView DataContext="{Binding UsersViewModel}"/>
-			</TabItem>
-
-			<TabItem Header="AUTOMOBILES">
-				<views:AutomobilesView DataContext="{Binding AutomobilesViewModel}"/>
-			</TabItem>
-
-			<TabItem Header="DEALERS">
-				<views:DealersView DataContext="{Binding DealersViewModel}"/>
-			</TabItem>
-
-			<TabItem Header="CONTRACTS">
-				<views:ContractsView DataContext="{Binding ContractsViewModel}"/>
-			</TabItem>
-
-		</TabControl>
-	</Grid>
 </Window>

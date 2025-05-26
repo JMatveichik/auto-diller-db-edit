@@ -23,22 +23,22 @@ namespace AutoLandProcessor.Services
 			services.AddSingleton<UsersView>();
 			services.AddSingleton<AutomobilesView>();
 			services.AddSingleton<ContractsView>();
-			services.AddSingleton<LoginDialog>();
+			services.AddSingleton<LoginView>();
 
 			//register viewmodels
-			services.AddSingleton<MainWindowViewModel>();
-			services.AddSingleton<UsersViewModel>();
-			services.AddSingleton<AutomobilesViewModel>();
-			services.AddSingleton<DealersViewModel>();
-			services.AddSingleton<ContractsViewModel>();
-			services.AddSingleton<LoginViewModel>();
+			services.AddTransient<MainWindowViewModel>();
+			services.AddTransient<MainContentViewModel>();
+			services.AddTransient<UsersViewModel>();
+			services.AddTransient<AutomobilesViewModel>();
+			services.AddTransient<DealersViewModel>();
+			services.AddTransient<ContractsViewModel>();
+			services.AddTransient<LoginViewModel>();
 
 			//register services
-			services.AddScoped<IUserService, UserService>();
-			services.AddScoped<IAutomobileService, AutomobileService>();
-			services.AddScoped<IDealerService, DealerService>();
-			services.AddScoped<IContractService, ContractService>();
-			services.AddSingleton<INavigationService, NavigationService>();
+			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IAutomobileService, AutomobileService>();
+			services.AddTransient<IDealerService, DealerService>();
+			services.AddTransient<IContractService, ContractService>();
 			services.AddSingleton<IAppLoginStateService, AppLoginStateService>();
 
 			return services;

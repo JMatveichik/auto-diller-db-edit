@@ -2,7 +2,6 @@
 using AutoLandProcessor.Services;
 using ReactiveUI.Fody.Helpers;
 
-
 namespace AutoLandProcessor.ViewModels
 {
     internal class DealersViewModel : BaseDatabaseViewModel
@@ -15,9 +14,6 @@ namespace AutoLandProcessor.ViewModels
 		public DealersViewModel(IDealerService dealerService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_dealerService = dealerService;
-			// Автоматическая загрузка при инициализации
-			LoadAsync().ConfigureAwait(false);
-
 		}
 
 		protected override async Task LoadAsync()
@@ -27,7 +23,7 @@ namespace AutoLandProcessor.ViewModels
 
 		protected override void UpdateUIForUser(User? user)
 		{
-			LoadAsync().ConfigureAwait(false);
+			
 		}
 	}
 }

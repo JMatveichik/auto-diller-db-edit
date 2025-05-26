@@ -1,6 +1,7 @@
 ﻿using AutoLandProcessor.Data;
 using AutoLandProcessor.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace AutoLandProcessor.Services
 {
@@ -13,15 +14,10 @@ namespace AutoLandProcessor.Services
 			return await _context.Users.ToListAsync();
 		}
 
-		public async Task<User?> LoginUser(string login, string password)
+		public async Task<User?> LoginUser(NetworkCredential credentials)
 		{
-			if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-			{
-				return null;
-			}
-
 			var foundUser = await _context.Users
-				.FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
+				.FirstOrDefaultAsync(u => u.Login == credentials.UserName && u.Password == credentials.Password	);
 
 			return foundUser;
 		}

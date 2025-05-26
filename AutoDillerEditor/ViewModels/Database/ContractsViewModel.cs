@@ -1,11 +1,7 @@
 ﻿using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
 using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AutoLandProcessor.ViewModels
 {
@@ -27,7 +23,7 @@ namespace AutoLandProcessor.ViewModels
 
 		protected override void UpdateUIForUser(User? user)
 		{
-			LoadAsync().ConfigureAwait(false);
+
 		}
 	}
 }

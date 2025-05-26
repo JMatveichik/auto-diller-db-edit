@@ -7,17 +7,15 @@
 			 xmlns:vm ="clr-namespace:AutoLandProcessor.ViewModels">
     <Application.Resources>
 
+		<DataTemplate DataType="{x:Type vm:LoginViewModel}">
+			<v:LoginView/>
+		</DataTemplate>
+
+		<DataTemplate DataType="{x:Type vm:MainContentViewModel}">
+			<v:MainContentView/>
+		</DataTemplate>
+
 		<ResourceDictionary>
-
-			<DataTemplate DataType="{x:Type vm:LoginViewModel}">
-				<v:LoginView/>
-			</DataTemplate>
-
-			<DataTemplate DataType="{x:Type vm:MainContentViewModel}">
-				<v:MainContentView/>
-			</DataTemplate>
-
-
 			<ResourceDictionary.MergedDictionaries>
 				<ui:ThemeResources>
 					<ui:ThemeResources.ThemeDictionaries>

@@ -2,26 +2,34 @@
 using AutoLandProcessor.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System.Reactive.Linq;
 
 namespace AutoLandProcessor.ViewModels
 {
 	internal abstract class ViewModelBase : ReactiveObject
 	{
-		[Reactive]
-		public User? CurrentUser { get; protected set; }
+		protected readonly IAppLoginStateService _appLoginState;
 
-		[Reactive]
-		public bool IsAuthenticated { get; private set; }
+		[ObservableAsProperty]
+		public User? CurrentUser { get; } // Только для чтения
+
+		[ObservableAsProperty]
+		public bool IsAuthenticated { get; }
 
 		public ViewModelBase(IAppLoginStateService appLoginStateService)
 		{
-			appLoginStateService.UserChanged.Subscribe(user =>
-			{
-				CurrentUser = user;
-				IsAuthenticated = CurrentUser != null;
+			_appLoginState = appLoginStateService;
 
-				UpdateUIForUser(user);
-			});
+			// Преобразуем поток изменений пользователя в свойства
+			_appLoginState.UserChanged
+				.ToPropertyEx(this, x => x.CurrentUser);
+
+			_appLoginState.UserChanged
+				.Select(user => user != null)
+				.ToPropertyEx(this, x => x.IsAuthenticated);
+
+			_appLoginState.UserChanged
+				.Subscribe(UpdateUIForUser);
 		}
 
 		protected abstract void UpdateUIForUser(User? user);

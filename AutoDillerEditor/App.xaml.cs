@@ -27,15 +27,9 @@ namespace AutoLandProcessor
 
 			var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
 			mainWindow.DataContext = ServiceProvider.GetRequiredService<MainWindowViewModel>();
-			Application.Current.MainWindow = mainWindow;
+			Current.MainWindow = mainWindow;
 
 			mainWindow.Show();
-
-			/*
-			var loginWindow = ServiceProvider.GetRequiredService<LoginDialog>();
-			loginWindow.Show();
-			*/
-
 		}
 	}
 }

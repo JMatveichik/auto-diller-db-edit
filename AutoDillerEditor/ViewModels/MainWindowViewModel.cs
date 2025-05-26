@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-
 using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
 using System.Net.NetworkInformation;
@@ -9,36 +8,37 @@ namespace AutoLandProcessor.ViewModels
 {
 	internal class MainWindowViewModel : ViewModelBase
 	{
-		private readonly INavigationService _navigationService;
+
+		[Reactive]
+		public object CurrentView { get; private set; } = new();
+
+		public LoginViewModel LoginViewModel { get; private set; }
+
+		public MainContentViewModel MainContentViewModel { get; private set; }
 
 
-		public UsersViewModel UsersViewModel { get; private set; }
-
-		public AutomobilesViewModel AutomobilesViewModel{ get; private set; }
-
-		public DealersViewModel	DealersViewModel { get; private set; }
-
-		public ContractsViewModel ContractsViewModel { get; private set; }
-
-		public MainWindowViewModel(	UsersViewModel usersViewModel,
-									AutomobilesViewModel automobilesViewModel,
-									DealersViewModel deallersViewModel,
-									ContractsViewModel contractsViewModel,
-									INavigationService navigationService,
+		public MainWindowViewModel(	LoginViewModel loginViewModel,
+									MainContentViewModel mainContentViewModel,
 									IAppLoginStateService appLoginStateService) :
 									base(appLoginStateService)
 		{
-			UsersViewModel		 = usersViewModel;
-			AutomobilesViewModel = automobilesViewModel;
-			DealersViewModel	 = deallersViewModel;
-			ContractsViewModel   = contractsViewModel;
-
-			_navigationService = navigationService;
+			MainContentViewModel = mainContentViewModel;
+			LoginViewModel		 = loginViewModel;
+			CurrentView			 = LoginViewModel;
 		}
 
+		public void ShowLogin()
+		{
+			CurrentView = LoginViewModel;
+		}
+
+		public void ShowMainContent()
+		{
+			CurrentView = MainContentViewModel;
+		}
 		protected override void UpdateUIForUser(User? user)
 		{
-
+			CurrentView = (user == null) ? LoginViewModel : MainContentViewModel;
 		}
 	}
 }

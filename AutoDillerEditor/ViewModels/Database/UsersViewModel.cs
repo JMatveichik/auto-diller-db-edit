@@ -13,11 +13,12 @@ namespace AutoLandProcessor.ViewModels
 		[Reactive]
 		public IEnumerable<User> Users { get; private set; } = Enumerable.Empty<User>();
 
+		public ReactiveCommand<Unit, Unit> Load { get; private set; }
 
 		public UsersViewModel(IUserService userService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_userService = userService;
-			LoadAsync().ConfigureAwait(false);
+			Load = ReactiveCommand.CreateFromTask(LoadAsync);
 		}
 
 		protected override async Task LoadAsync()
@@ -27,7 +28,6 @@ namespace AutoLandProcessor.ViewModels
 
 		protected override void UpdateUIForUser(User? user)
 		{
-			throw new NotImplementedException();
 		}
 	}
 }

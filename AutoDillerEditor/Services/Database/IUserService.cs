@@ -1,4 +1,5 @@
 ﻿using AutoLandProcessor.Models;
+using System.Net;
 
 
 namespace AutoLandProcessor.Services
@@ -7,7 +8,8 @@ namespace AutoLandProcessor.Services
 	{
 		Task<IEnumerable<User>> GetAllUsersAsync();
 
-		Task<User?> LoginUser(string login, string password );
+		Task<User?> LoginUser(NetworkCredential credentials);
+
 		Task<User?> GetUserByIdAsync(int id);
 		Task<User?> GetUserByLoginAsync(string login);
 
