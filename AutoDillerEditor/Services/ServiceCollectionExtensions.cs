@@ -24,6 +24,7 @@ namespace AutoLandProcessor.Services
 			services.AddSingleton<AutomobilesView>();
 			services.AddSingleton<ContractsView>();
 			services.AddSingleton<LoginView>();
+			services.AddSingleton<CurrentUserView>();
 
 			//register viewmodels
 			services.AddTransient<MainWindowViewModel>();
@@ -33,6 +34,7 @@ namespace AutoLandProcessor.Services
 			services.AddTransient<DealersViewModel>();
 			services.AddTransient<ContractsViewModel>();
 			services.AddTransient<LoginViewModel>();
+			services.AddTransient<CurrentUserViewModel>();
 
 			//register services
 			services.AddTransient<IUserService, UserService>();

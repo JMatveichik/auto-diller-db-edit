@@ -25,6 +25,7 @@ namespace AutoLandProcessor.ViewModels
 			MainContentViewModel = mainContentViewModel;
 			LoginViewModel		 = loginViewModel;
 			CurrentView			 = LoginViewModel;
+
 		}
 
 		public void ShowLogin()

@@ -17,7 +17,23 @@
 	</UserControl.Resources>
 
 	<Grid>
-		<TabControl>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<views:CurrentUserView Grid.Row="0"
+							   Grid.ColumnSpan="2"
+							   HorizontalAlignment="Right"
+							   DataContext="{Binding CurrentUserViewModel}"/>
+
+		<TabControl Grid.Row="1" Grid.ColumnSpan="2">
 			<TabItem Header="USERS">
 				<views:UsersView DataContext="{Binding UsersViewModel}"/>
 			</TabItem>
@@ -35,6 +51,8 @@
 			</TabItem>
 
 		</TabControl>
+
+
 	</Grid>
 
 </UserControl>

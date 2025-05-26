@@ -11,6 +11,9 @@
     <Compile Update="Views\ContractsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CurrentUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\DealersView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

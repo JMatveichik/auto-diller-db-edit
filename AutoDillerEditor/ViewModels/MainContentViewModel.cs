@@ -8,6 +8,7 @@ namespace AutoLandProcessor.ViewModels
 	internal class MainContentViewModel : ViewModelBase
 	{
 		public MainContentViewModel(UsersViewModel usersViewModel,
+									CurrentUserViewModel currentUserViewModel,
 									AutomobilesViewModel automobilesViewModel,
 									DealersViewModel dealersViewModel,
 									ContractsViewModel contractsViewModel,
@@ -17,7 +18,12 @@ namespace AutoLandProcessor.ViewModels
 			AutomobilesViewModel = automobilesViewModel;
 			DealersViewModel = dealersViewModel;
 			ContractsViewModel = contractsViewModel;
+			CurrentUserViewModel = currentUserViewModel;
 		}
+
+
+		public CurrentUserViewModel CurrentUserViewModel { get; private set; }
+
 
 		public UsersViewModel UsersViewModel { get; private set; }
 
