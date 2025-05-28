@@ -9,7 +9,7 @@ namespace AutoLandProcessor.Services
 	{
 		public UserRepository(AppDBContext context) : base(context) { }
 
-		public async Task<IEnumerable<User>> GetAllUsersAsync()
+		public async Task<IEnumerable<User>> GetAllAsync()
 		{
 			return await _context.Users.ToListAsync();
 		}
@@ -22,7 +22,7 @@ namespace AutoLandProcessor.Services
 			return foundUser;
 		}
 
-		public async Task<User?> GetUserByIdAsync(int id)
+		public async Task<User?> GetByIdAsync(int id)
 		{
 			return await _context.Users.FindAsync(id);
 		}
@@ -32,26 +32,49 @@ namespace AutoLandProcessor.Services
 			return await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
 		}
 
-		public async Task CreateUserAsync(User user)
+		public async Task CreateAsync(User user)
 		{
 			await _context.Users.AddAsync(user);
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task UpdateUserAsync(User user)
+		public async Task UpdateAsync(User user)
 		{
 			_context.Users.Update(user);
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task DeleteUserAsync(int id)
+		public async Task DeleteAsync(User user)
 		{
-			var user = await _context.Users.FindAsync(id);
 			if (user != null)
 			{
 				_context.Users.Remove(user);
 				await _context.SaveChangesAsync();
 			}
+		}
+
+		public async Task<IEnumerable<User>> FindAsync(string filter, string role)
+		{
+			var query = _context.Users.AsQueryable();
+
+			// Поиск по тексту (если filter не пустой)
+			if (!string.IsNullOrEmpty(filter))
+			{
+				query = query.Where(u =>
+					u.Login.Contains(filter) ||
+					u.Name.Contains(filter) ||
+					u.Surname.Contains(filter) ||
+					u.Email.Contains(filter)
+				);
+			}
+
+			// Фильтр по роли (если role не пустая)
+			if (!string.IsNullOrEmpty(role))
+			{
+				query = query.Where(u => u.Role == role.ToLower());
+			}
+
+			return await query.ToListAsync();
 		}
 	}
 }

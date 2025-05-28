@@ -4,20 +4,23 @@ using System.Net;
 
 namespace AutoLandProcessor.Services
 {
-	internal interface IUserRepository
+	internal interface IAutolandRepository<TModel> where TModel : class
 	{
-		Task<IEnumerable<User>> GetAllUsersAsync();
+		Task<IEnumerable<TModel>> GetAllAsync();
 
+		Task<TModel?> GetByIdAsync(int id);
+
+		Task CreateAsync(TModel item);
+
+		Task UpdateAsync(TModel item);
+
+		Task DeleteAsync(TModel item);
+	}
+
+	internal interface IUserRepository : IAutolandRepository<User>
+	{
 		Task<User?> LoginUser(NetworkCredential credentials);
 
-		Task<User?> GetUserByIdAsync(int id);
-
-		Task<User?> GetUserByLoginAsync(string login);
-
-		Task CreateUserAsync(User user);
-
-		Task UpdateUserAsync(User user);
-
-		Task DeleteUserAsync(int id);
+		Task<IEnumerable<User>> FindAsync(string filter, string role);
 	}
 }
