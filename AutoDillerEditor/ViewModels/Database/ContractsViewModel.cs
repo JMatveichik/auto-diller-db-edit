@@ -7,12 +7,12 @@ namespace AutoLandProcessor.ViewModels
 {
 	internal class ContractsViewModel : BaseDatabaseViewModel
 	{
-		private readonly IContractService _contractService;
+		private readonly IContractRepository _contractService;
 
 		[Reactive]
 		public IEnumerable<Contract> Contracts { get; private set; } = Enumerable.Empty<Contract>();
 
-		public ContractsViewModel(IContractService contractService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public ContractsViewModel(IContractRepository contractService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_contractService = contractService;
 		}

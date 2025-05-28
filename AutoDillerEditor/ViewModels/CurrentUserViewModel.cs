@@ -2,7 +2,6 @@
 using AutoLandProcessor.Services;
 using ReactiveUI.Fody.Helpers;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 
@@ -34,10 +33,9 @@ namespace AutoLandProcessor.ViewModels
 				Phone = user.Telephone;
 				Email = user.Email;
 
-				// Получаем директорию приложения
+				// Получаем путь к изображению
 				string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
 				string normalizedPath = user.Avatar.Replace('/', Path.DirectorySeparatorChar);
-				// Комбинируем с относительным путём
 				string imagePath = Path.Combine(appDirectory, normalizedPath);
 
 				LoadImageAsync(imagePath);
@@ -53,7 +51,7 @@ namespace AutoLandProcessor.ViewModels
 				bitmap.UriSource = new Uri(path);
 				bitmap.CacheOption = BitmapCacheOption.OnLoad;
 				bitmap.EndInit();
-				bitmap.Freeze(); // Для потокобезопасности
+				bitmap.Freeze();
 				return bitmap;
 			});
 		}

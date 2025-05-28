@@ -4,15 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:AutoLandProcessor.Views"
+			 xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="80" d:DesignWidth="300">
+             d:DesignHeight="90" d:DesignWidth="300">
 
     <Grid Margin=" 5">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
@@ -20,11 +22,20 @@
 
 		<Image Grid.Row="0"
 			   Grid.RowSpan="3"
-			   Grid.Column="0"
+			   Grid.Column="1"
+			   VerticalAlignment="Center"
 			   Margin="10"
 			   Source ="{Binding Avatar}" Width="32" Height="32"/>
-		<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FullName}" FontSize="18"/>
-		<TextBlock Grid.Row="1" Grid.Column="1" Margin="0" Text="{Binding Phone}" FontSize="12"/>
-		<TextBlock Grid.Row="2" Grid.Column="1" Margin="0" Text="{Binding Email}" FontSize="12"/>
+
+		<TextBlock Grid.Row="0" Grid.Column="0"
+				   Text="{Binding FullName}" FontSize="18"/>
+		<TextBlock Grid.Row="1" Grid.Column="0" Margin="0" Text="{Binding Phone}" FontSize="12"/>
+		<TextBlock Grid.Row="2" Grid.Column="0" Margin="0" Text="{Binding Email}" FontSize="12"/>
+		<!--
+		<DatePicker
+				Grid.Row="3" Grid.Column="0"
+				md:TextFieldAssist.HasClearButton="True"
+				md:HintAssist.Hint="User birthday"
+				SelectedDate="{Binding Birthday}"/> -->
 	</Grid>
 </UserControl>

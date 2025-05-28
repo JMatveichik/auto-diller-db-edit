@@ -11,7 +11,7 @@ namespace AutoLandProcessor.ViewModels
 {
 	internal class LoginViewModel : ViewModelBase
 	{
-		private readonly IUserService _userService;
+		private readonly IUserRepository _userService;
 
 		[Reactive]
 		public string Username{ get; set; } = string.Empty;
@@ -27,7 +27,7 @@ namespace AutoLandProcessor.ViewModels
 		public ReactiveCommand<Unit, Unit> LoginCommand { get; private set; }
 
 
-		public LoginViewModel(IUserService userService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public LoginViewModel(IUserRepository userService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 
 			_userService = userService ??

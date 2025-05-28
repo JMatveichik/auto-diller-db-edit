@@ -10,8 +10,9 @@
 		xmlns:vm="clr-namespace:AutoLandProcessor.ViewModels"
 		mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-				 WindowStartupLocation="CenterScreen"
-				 WindowState="Maximized">
+		WindowStartupLocation="CenterScreen"
+		WindowState="Maximized"
+		Style="{StaticResource MaterialDesignWindow}">
 
 	<ContentControl Content="{Binding CurrentView}"/>
 

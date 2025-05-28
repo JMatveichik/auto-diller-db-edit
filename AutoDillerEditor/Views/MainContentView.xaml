@@ -4,15 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:AutoLandProcessor.Views"
-             mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+			 xmlns:mdi="http://materialdesigninxaml.net/winfx/xaml/themes"
+			 mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="800">
 
 	<UserControl.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-		<DataTemplate x:Key="NavigationViewHeaderTemplate">
-			<TextBlock Text="{Binding}" Margin="12,32,0,0" />
-		</DataTemplate>
 
 	</UserControl.Resources>
 
@@ -28,30 +25,107 @@
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 
-		<views:CurrentUserView Grid.Row="0"
-							   Grid.ColumnSpan="2"
-							   HorizontalAlignment="Right"
-							   DataContext="{Binding CurrentUserViewModel}"/>
 
-		<TabControl Grid.Row="1" Grid.ColumnSpan="2">
-			<TabItem Header="USERS">
-				<views:UsersView DataContext="{Binding UsersViewModel}"/>
+		<views:CurrentUserView
+				HorizontalAlignment="Right"
+				DataContext="{Binding CurrentUserViewModel}"/>
+
+		<TabControl  TabStripPlacement="Left"
+					 VerticalContentAlignment="Top"
+					 Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+					 Grid.Row="1"
+					 Grid.ColumnSpan="2"
+					 Margin="10"
+					 mdi:ColorZoneAssist.Mode="PrimaryMid">
+
+			<TabControl.Resources>
+
+				<Style TargetType="StackPanel">
+					<Setter Property="HorizontalAlignment" Value="Left"/>
+					<Setter Property="Orientation" Value="Vertical"/>
+					<Setter Property="Width" Value="Auto"/>
+					<Setter Property="Height" Value="Auto"/>
+				</Style>
+
+				<Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignSubtitle2TextBlock}">
+					<Setter Property="VerticalAlignment" Value="Center"/>
+				</Style>
+
+				<Style TargetType="mdi:PackIcon">
+					<Setter Property="Height" Value="32"/>
+					<Setter Property="Width" Value="32"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
+					<Setter Property="HorizontalAlignment" Value="Center"/>
+				</Style>
+			</TabControl.Resources>
+
+			<TabItem HorizontalAlignment="Left" >
+
+				<TabItem.Header>
+					<StackPanel>
+						<mdi:PackIcon Kind="AccountMultiple" Margin="0, 0, 10, 0"/>
+						<TextBlock Text="ПОЛЬЗОВАТЕЛИ"/>
+					</StackPanel>
+				</TabItem.Header>
+
+				<views:UsersView Margin="10, 0" DataContext="{Binding UsersViewModel}"/>
 			</TabItem>
 
-			<TabItem Header="AUTOMOBILES">
+			<TabItem HorizontalAlignment="Left">
+				<TabItem.Header>
+					<StackPanel>
+						<mdi:PackIcon Kind="CarMultiple" Margin="0, 0, 10, 0"/>
+						<TextBlock Text="АВТОМОБИЛИ"/>
+					</StackPanel>
+				</TabItem.Header>
 				<views:AutomobilesView DataContext="{Binding AutomobilesViewModel}"/>
 			</TabItem>
 
-			<TabItem Header="DEALERS">
+			<TabItem HorizontalAlignment="Left">
+				<TabItem.Header>
+					<StackPanel>
+						<mdi:PackIcon Kind="AccountSupervisorCircle" Margin="0, 0, 10, 0"/>
+						<TextBlock Text="ДИЛЛЕРЫ"/>
+					</StackPanel>
+				</TabItem.Header>
+
 				<views:DealersView DataContext="{Binding DealersViewModel}"/>
 			</TabItem>
 
-			<TabItem Header="CONTRACTS">
+			<TabItem HorizontalAlignment="Left">
+				<TabItem.Header>
+					<StackPanel>
+						<mdi:PackIcon Kind="FileSign" Margin="0, 0, 10, 0"/>
+						<TextBlock Text="КОНТРАКТЫ"/>
+					</StackPanel>
+				</TabItem.Header>
+
 				<views:ContractsView DataContext="{Binding ContractsViewModel}"/>
 			</TabItem>
 
-		</TabControl>
+			<TabItem HorizontalAlignment="Left">
+				<TabItem.Header>
+					<StackPanel>
+						<mdi:PackIcon Kind="Parachute" Margin="0, 0, 10, 0"/>
+						<TextBlock Text="ОБОРУДОВАНИЕ"/>
+					</StackPanel>
+				</TabItem.Header>
 
+				<views:EquipmentsView DataContext="{Binding EquipmentsViewModel}"/>
+			</TabItem>
+
+			<TabItem HorizontalAlignment="Left">
+				<TabItem.Header>
+					<StackPanel>
+						<mdi:PackIcon Kind="Parachute" Margin="0, 0, 10, 0"/>
+						<TextBlock Text="ГАРАНТИИ"/>
+					</StackPanel>
+				</TabItem.Header>
+
+				<views:WarrantiesView DataContext="{Binding WarrantiesViewModel}"/>
+			</TabItem>
+
+		</TabControl>
 
 	</Grid>
 

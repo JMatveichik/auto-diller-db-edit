@@ -5,9 +5,9 @@ using System.Net;
 
 namespace AutoLandProcessor.Services
 {
-	internal class UserService : DatabaseServiceBase , IUserService
+	internal class UserRepository : BaseRepository , IUserRepository
 	{
-		public UserService(AppDatabaseContext context) : base(context) { }
+		public UserRepository(AppDBContext context) : base(context) { }
 
 		public async Task<IEnumerable<User>> GetAllUsersAsync()
 		{

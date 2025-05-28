@@ -6,12 +6,12 @@ namespace AutoLandProcessor.ViewModels
 {
     internal class DealersViewModel : BaseDatabaseViewModel
 	{
-		private readonly IDealerService _dealerService;
+		private readonly IDealerRepository _dealerService;
 
 		[Reactive]
 		public IEnumerable<Dealer> Dealers { get; private set; } = Enumerable.Empty<Dealer>();
 
-		public DealersViewModel(IDealerService dealerService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public DealersViewModel(IDealerRepository dealerService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_dealerService = dealerService;
 		}

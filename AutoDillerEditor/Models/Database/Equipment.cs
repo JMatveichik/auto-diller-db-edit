@@ -21,7 +21,7 @@ namespace AutoLandProcessor.Models
 
 		[Column("e_name")]
 		[MaxLength(70)]
-		public string Name { get; set; } = "default";
+		public string? Name { get; set; }
 
 		[Required]
 		[Column("e_engine_name")]

@@ -12,7 +12,7 @@ namespace AutoLandProcessor.Services
 		public static IServiceCollection RegisterAppServices(this ServiceCollection services)
 		{
 			// Регистрация DbContext с использованием SQLite
-			services.AddDbContext<AppDatabaseContext>(options =>
+			services.AddDbContext<AppDBContext>(options =>
 			{
 				var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 				options.UseSqlite(connectionString);
@@ -23,6 +23,8 @@ namespace AutoLandProcessor.Services
 			services.AddSingleton<UsersView>();
 			services.AddSingleton<AutomobilesView>();
 			services.AddSingleton<ContractsView>();
+			services.AddSingleton<EquipmentsView>();
+			services.AddSingleton<WarrantiesView>();
 			services.AddSingleton<LoginView>();
 			services.AddSingleton<CurrentUserView>();
 
@@ -33,14 +35,18 @@ namespace AutoLandProcessor.Services
 			services.AddTransient<AutomobilesViewModel>();
 			services.AddTransient<DealersViewModel>();
 			services.AddTransient<ContractsViewModel>();
+			services.AddTransient<EquipmentsViewModel>();
+			services.AddTransient<WarrantiesViewModel>();
 			services.AddTransient<LoginViewModel>();
 			services.AddTransient<CurrentUserViewModel>();
 
 			//register services
-			services.AddTransient<IUserService, UserService>();
-			services.AddTransient<IAutomobileService, AutomobileService>();
-			services.AddTransient<IDealerService, DealerService>();
-			services.AddTransient<IContractService, ContractService>();
+			services.AddTransient<IUserRepository, UserRepository>();
+			services.AddTransient<IAutomobileRepository, AutomobileRepository>();
+			services.AddTransient<IDealerRepository, DealerRepository>();
+			services.AddTransient<IContractRepository, ContractRepository>();
+			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
+			services.AddTransient<IWarrantyRepository, WarrantyRepository>();
 			services.AddSingleton<IAppLoginStateService, AppLoginStateService>();
 
 			return services;

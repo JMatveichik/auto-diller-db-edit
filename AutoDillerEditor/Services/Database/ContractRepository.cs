@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.Services
 {
-	internal class ContractService : DatabaseServiceBase, IContractService
+	internal class ContractRepository : BaseRepository, IContractRepository
 	{
-		public ContractService(AppDatabaseContext context) : base(context)
+		public ContractRepository(AppDBContext context) : base(context)
 		{
 		}
 

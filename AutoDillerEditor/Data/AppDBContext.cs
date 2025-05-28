@@ -1,12 +1,11 @@
 ﻿using AutoLandProcessor.Models;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace AutoLandProcessor.Data
 {
-	internal class AppDatabaseContext : DbContext
+	internal class AppDBContext : DbContext
 	{
-		public AppDatabaseContext(DbContextOptions<AppDatabaseContext> options) : base(options)
+		public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
 		{
 		}
 
@@ -18,6 +17,7 @@ namespace AutoLandProcessor.Data
 		public DbSet<Equipment> Equipments { get; set; }
 		public DbSet<Warranty> Warranties { get; set; }
 
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
@@ -26,7 +26,11 @@ namespace AutoLandProcessor.Data
 			modelBuilder.Entity<Equipment>()
 				.HasKey(e => new { e.AutoId, e.Id });
 
-			// Настройка отношений
+			modelBuilder.Entity<Equipment>()
+				.HasOne(e => e.Automobile)
+				.WithMany(a => a.Equipments)
+				.HasForeignKey(e => e.AutoId);
+
 			modelBuilder.Entity<Automobile>()
 				.HasOne(a => a.BodyType)
 				.WithMany(bt => bt.Automobiles)
@@ -56,11 +60,6 @@ namespace AutoLandProcessor.Data
 				.HasOne(c => c.Warranty)
 				.WithMany(w => w.Contracts)
 				.HasForeignKey(c => c.WarrantyId);
-
-			modelBuilder.Entity<Equipment>()
-				.HasOne(e => e.Automobile)
-				.WithMany(a => a.Equipments)
-				.HasForeignKey(e => e.AutoId);
 		}
 	}
 }

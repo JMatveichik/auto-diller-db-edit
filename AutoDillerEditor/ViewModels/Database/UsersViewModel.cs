@@ -8,17 +8,18 @@ namespace AutoLandProcessor.ViewModels
 {
     internal class UsersViewModel : BaseDatabaseViewModel
     {
-		private readonly IUserService _userService;
+		private readonly IUserRepository _userService;
 
 		[Reactive]
 		public IEnumerable<User> Users { get; private set; } = Enumerable.Empty<User>();
 
-		public ReactiveCommand<Unit, Unit> Load { get; private set; }
+		[Reactive]
+		public User? SelectedUser { get; set; } = null;
 
-		public UsersViewModel(IUserService userService, IAppLoginStateService appLoginState) : base(appLoginState)
+
+		public UsersViewModel(IUserRepository userService, IAppLoginStateService appLoginState) : base(appLoginState)
 		{
 			_userService = userService;
-			Load = ReactiveCommand.CreateFromTask(LoadAsync);
 		}
 
 		protected override async Task LoadAsync()

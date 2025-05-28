@@ -4,25 +4,137 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:AutoLandProcessor.ViewModels"
-             mc:Ignorable="d"
+			 xmlns:views="clr-namespace:AutoLandProcessor.Views"
+			 xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+			 mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
 	<Grid>
+
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 
-		<StackPanel Grid.Row="0" Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
-			<Button Content="Load" Margin="5" Command="{Binding Load}"/>
-			<Button Content="Save" Margin="5"/>
-			<Button Content="Add"  Margin="5"/>
-		</StackPanel>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
 
+		<DockPanel Grid.Row="0" Margin="10" Grid.ColumnSpan="2">
+
+			<StackPanel Orientation="Horizontal"
+						DockPanel.Dock="Left">
+
+				<md:PackIcon Kind="AccountMultiple"
+							 HorizontalAlignment="Center"
+							 VerticalAlignment="Center"
+							 Width="32" Height="32" Margin="5"/>
+
+				<TextBlock Text="УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ"
+						   VerticalAlignment="Center"
+						   Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+			</StackPanel>
+			<StackPanel  HorizontalAlignment="Right"
+						 Orientation="Horizontal"
+						 DockPanel.Dock="Right">
+
+				<Button Content="Load" Margin="5" Command="{Binding Load}"/>
+				<Button Content="Save" Margin="5"/>
+				<Button Content="Add"  Margin="5"/>
+
+			</StackPanel>
+		</DockPanel>
+
+		<!--
 		<DataGrid Grid.Row="1"
 				ItemsSource="{Binding Users}"
 				AutoGenerateColumns="True">
 
-		</DataGrid>
+		</DataGrid>-->
+
+		<md:Card Grid.Row="1" Margin="2" md:ElevationAssist.Elevation="Dp4">
+			<ListView Padding="5"
+				ItemsSource="{Binding Users}"
+				SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+				ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+			<ListView.Resources>
+
+				<Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignCaptionTextBlock}">
+					<Setter Property="VerticalAlignment" Value="Center"/>
+				</Style>
+
+				<Style TargetType="md:PackIcon">
+					<Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Secondary.Foreground}"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
+					<Setter Property="Height" Value="16"/>
+					<Setter Property="Width" Value="16"/>
+					<Setter Property="Margin" Value="5,0,5,0"/>
+				</Style>
+
+				<Style x:Key="InfoStackPanel" TargetType="StackPanel">
+					<Setter Property="Orientation" Value="Horizontal"/>
+					<Setter Property="HorizontalAlignment" Value="Left"/>
+					<Setter Property="Margin" Value="5, 2"/>
+				</Style>
+
+			</ListView.Resources>
+
+			<ListView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Orientation="Horizontal"  />
+				</ItemsPanelTemplate>
+			</ListView.ItemsPanel>
+
+			<ListView.ItemTemplate>
+				<DataTemplate>
+
+					<md:Card   md:ElevationAssist.Elevation="Dp4"
+							   Width="200" Height="120">
+
+						<StackPanel Margin="5" Orientation="Vertical" >
+
+							<StackPanel Margin="5"  Style="{StaticResource InfoStackPanel}">
+								<TextBlock Text="{Binding Name}"
+										   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
+
+								<TextBlock Text="{Binding Surname}" Margin="5,0"
+										   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
+							</StackPanel>
+
+							<StackPanel Style="{StaticResource InfoStackPanel}">
+								<md:PackIcon Kind="EmailOutline"/>
+								<TextBlock Text="{Binding Email}" />
+							</StackPanel>
+
+							<StackPanel Style="{StaticResource InfoStackPanel}">
+								<md:PackIcon Kind="Phone"/>
+								<TextBlock Text="{Binding Telephone}"/>
+							</StackPanel>
+
+							<StackPanel Style="{StaticResource InfoStackPanel}">
+								<md:PackIcon Kind="CakeVariantOutline"/>
+								<TextBlock Text="{Binding Birthday, StringFormat='{}{0:dd MMMM yyyy}'}" />
+							</StackPanel>
+
+							<StackPanel Style="{StaticResource InfoStackPanel}">
+								<md:PackIcon Kind="MapMarkerOutline"/>
+								<TextBlock Text="{Binding Address}"/>
+							</StackPanel>
+
+						</StackPanel>
+
+					</md:Card>
+
+				</DataTemplate>
+			</ListView.ItemTemplate>
+
+		</ListView>
+		</md:Card>
+
+		<views:UserView Grid.Column="1" Grid.Row="1" Margin="2"
+						MinWidth="300"
+						DataContext="{Binding SelectedUser}"/>
 	</Grid>
 </UserControl>

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoLandProcessor.Services
 {
-	internal class DealerService : DatabaseServiceBase,  IDealerService
+	internal class DealerRepository : BaseRepository,  IDealerRepository
 	{
-		public DealerService(AppDatabaseContext context) : base(context) { }
+		public DealerRepository(AppDBContext context) : base(context) { }
 
 		public async Task<IEnumerable<Dealer>> GetAllDealersAsync()
 		{

@@ -11,6 +11,8 @@ namespace AutoLandProcessor.ViewModels
 									CurrentUserViewModel currentUserViewModel,
 									AutomobilesViewModel automobilesViewModel,
 									DealersViewModel dealersViewModel,
+									EquipmentsViewModel equipmentsViewModel,
+									WarrantiesViewModel warrantiesViewModel,
 									ContractsViewModel contractsViewModel,
 									IAppLoginStateService appLoginStateService) : base(appLoginStateService)
 		{
@@ -19,6 +21,8 @@ namespace AutoLandProcessor.ViewModels
 			DealersViewModel = dealersViewModel;
 			ContractsViewModel = contractsViewModel;
 			CurrentUserViewModel = currentUserViewModel;
+			EquipmentsViewModel = equipmentsViewModel;
+			WarrantiesViewModel = warrantiesViewModel;
 		}
 
 
@@ -32,6 +36,10 @@ namespace AutoLandProcessor.ViewModels
 		public DealersViewModel DealersViewModel { get; private set; }
 
 		public ContractsViewModel ContractsViewModel { get; private set; }
+
+		public EquipmentsViewModel EquipmentsViewModel { get; private set; }
+
+		public WarrantiesViewModel WarrantiesViewModel { get; private set; }
 
 		protected override void UpdateUIForUser(User? user)
 		{

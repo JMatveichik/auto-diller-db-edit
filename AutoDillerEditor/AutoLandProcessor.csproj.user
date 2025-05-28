@@ -17,6 +17,9 @@
     <Compile Update="Views\DealersView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EquipmentsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +27,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UsersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\WarrantiesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
