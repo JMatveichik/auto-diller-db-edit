@@ -27,6 +27,7 @@ namespace AutoLandProcessor.Services
 			services.AddSingleton<WarrantiesView>();
 			services.AddSingleton<LoginView>();
 			services.AddSingleton<CurrentUserView>();
+			services.AddSingleton<EditUserDialog>();
 
 			//register viewmodels
 			services.AddTransient<MainWindowViewModel>();
@@ -48,6 +49,7 @@ namespace AutoLandProcessor.Services
 			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
 			services.AddTransient<IWarrantyRepository, WarrantyRepository>();
 			services.AddSingleton<IAppLoginStateService, AppLoginStateService>();
+			services.AddSingleton<IUserDialogService, UserDialogService>();
 
 			return services;
 		}

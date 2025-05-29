@@ -9,7 +9,9 @@ namespace AutoLandProcessor.ViewModels
 {
 	internal class UsersViewModel : BaseDatabaseViewModel
 	{
-		private readonly IUserRepository _userService;
+		private readonly IUserRepository _userRepository;
+
+		private readonly IUserDialogService _dialogs;
 
 		[Reactive]
 		public IEnumerable<User> Users { get; private set; } = Enumerable.Empty<User>();
@@ -23,8 +25,7 @@ namespace AutoLandProcessor.ViewModels
 		[Reactive]
 		public string RoleFilter { get; set; } = string.Empty;
 
-		[Reactive]
-		public List<string> AvailableRoles { get; private set; } = new() { "Admin", "User", "Employee" };
+		public static List<string> AvailableRoles { get; private set; } = new() { "Admin", "User", "Employee" };
 
 		/// <summary>
 		///Команда редактирования пользователя
@@ -36,15 +37,25 @@ namespace AutoLandProcessor.ViewModels
 		/// </summary>
 		public ReactiveCommand<User, Unit> DeleteUserCommand { get; private set; }
 
+		/// <summary>
+		///Команда добавления нового пользователя
+		/// </summary>
+		public ReactiveCommand<Unit, Unit> AddUserCommand { get; private set; }
 
-		public UsersViewModel(IUserRepository userService, IAppLoginStateService appLoginState) : base(appLoginState)
+
+		public UsersViewModel(	IUserRepository userRepository,
+								IUserDialogService dialogs,
+								IAppLoginStateService appLoginState) : base(appLoginState)
 		{
-			_userService = userService;
+			_userRepository = userRepository;
+			_dialogs = dialogs;
 
+			//Observable для текстового фильтра
 			var searchStream = this.WhenAnyValue(x => x.TextFilter)
 				.Throttle(TimeSpan.FromMilliseconds(500))
 				.Where(text => text?.Length >= 3 || string.IsNullOrEmpty(text));
 
+			//Observable для фильтра по ролям
 			var roleStream = this.WhenAnyValue(x => x.RoleFilter);
 
 			// Объединяем два Observable от текстового фильтра и филтра по ролям
@@ -58,29 +69,46 @@ namespace AutoLandProcessor.ViewModels
 
 			EditUserCommand		= ReactiveCommand.CreateFromTask<User>(EditUser);
 			DeleteUserCommand	= ReactiveCommand.CreateFromTask<User>(DeleteUser);
-
+			AddUserCommand	    = ReactiveCommand.CreateFromTask(AddUser);
 		}
 
 		protected override async Task LoadAsync()
 		{
-			Users = await _userService.GetAllAsync();
+			Users = await _userRepository.GetAllAsync();
 		}
 
 		protected async Task<IEnumerable<User>> SearchUsersAsync(string filter, string role)
 		{
-			return await _userService.FindAsync(filter, role);
+			return await _userRepository.FindAsync(filter, role);
+		}
+
+		private async Task AddUser()
+		{
+			var newUser = await _dialogs.ShowAddNewUserDialog();
+			if (newUser != null)
+			{
+				await _userRepository.CreateAsync(newUser);
+				await LoadAsync();
+			}
 		}
 
 		private async Task EditUser(User user)
 		{
-			await _userService.UpdateAsync(user);
+			if (await _dialogs.ShowEditUserDialog(user))
+			{
+				await _userRepository.UpdateAsync(user);
+				await LoadAsync();
+			}
 		}
 
 		private async Task DeleteUser(User user)
 		{
-			await _userService.DeleteAsync(user);
+			if (await _dialogs.ShowDeleteUserDialog(user))
+			{
+				await _userRepository.DeleteAsync(user);
+				await LoadAsync();
+			}
 		}
-
 
 		protected override void UpdateUIForUser(User? user)
 		{

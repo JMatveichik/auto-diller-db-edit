@@ -17,6 +17,12 @@
     <Compile Update="Views\DealersView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\ConfirmDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\EditUserDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EquipmentsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,12 +30,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MainContentView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\UsersView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\UserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\WarrantiesView.xaml.cs">
