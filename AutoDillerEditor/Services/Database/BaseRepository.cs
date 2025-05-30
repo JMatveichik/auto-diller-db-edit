@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.Services
 {
-    internal class BaseRepository
+    public class BaseRepository
     {
 		protected readonly AppDBContext _context;
 

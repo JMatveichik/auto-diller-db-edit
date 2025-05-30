@@ -2,7 +2,7 @@
 
 namespace AutoLandProcessor.Services
 {
-    internal interface IWarrantyRepository
+    public interface IWarrantyRepository
     {
 		Task<IEnumerable<Warranty>> GetAllWarrantiesAsync();
 	}

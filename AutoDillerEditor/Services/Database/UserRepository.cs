@@ -5,7 +5,7 @@ using System.Net;
 
 namespace AutoLandProcessor.Services
 {
-	internal class UserRepository : BaseRepository , IUserRepository
+	public class UserRepository : BaseRepository , IUserRepository
 	{
 		public UserRepository(AppDBContext context) : base(context) { }
 

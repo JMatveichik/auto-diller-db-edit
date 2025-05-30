@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.ViewModels
 {
-    internal class DialogMessageViewModel : ReactiveObject
+    public class DialogMessageViewModel : ReactiveObject
     {
         [Reactive]
         public string MessageTitle { get; set; }

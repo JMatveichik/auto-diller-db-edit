@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal class EquipmentsViewModel : BaseDatabaseViewModel
+	public class EquipmentsViewModel : BaseDatabaseViewModel
 	{
 		private readonly IEquipmentRepository _equipService;
 

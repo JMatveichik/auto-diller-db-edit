@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal class CurrentUserViewModel : ViewModelBase
+	public class CurrentUserViewModel : ViewModelBase
 	{
 		[Reactive]
 		public string? FullName { get; private set; } = string.Empty;

@@ -6,7 +6,7 @@ namespace AutoLandProcessor.Views
     /// <summary>
     /// Interaction logic for EditUserDialog.xaml
     /// </summary>
-    internal partial class EditUserDialog : Window
+    public partial class EditUserDialog : Window
     {
         public EditUserDialog(User user)
         {

@@ -11,7 +11,7 @@ namespace AutoLandProcessor.Services
 	/// <summary>
 	/// Реализация сервиса состояния аутентификации с использованием реактивного подхода
 	/// </summary>
-	internal class AppLoginStateService : IAppLoginStateService
+	public class AppLoginStateService : IAppLoginStateService
 	{
 		/// <summary>
 		/// BehaviorSubject - специальный тип Subject в Reactive Extensions, который:

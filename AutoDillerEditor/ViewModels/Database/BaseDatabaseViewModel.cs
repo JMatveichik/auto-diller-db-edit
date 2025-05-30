@@ -4,7 +4,7 @@ using System.Reactive;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal abstract class BaseDatabaseViewModel : ViewModelBase
+	public abstract class BaseDatabaseViewModel : ViewModelBase
 	{
 		public ReactiveCommand<Unit, Unit> Load { get; private set; }
 

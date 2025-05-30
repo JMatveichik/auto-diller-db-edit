@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ControlzEx.Standard;
-using System.Data;
-using System.Net;
-using System.Xml.Linq;
+﻿
 
 namespace AutoLandProcessor.Models
 {
-    internal static class UserExtentions
+    public static class UserExtentions
     {
 		public static User Clone(this User source)
 		{

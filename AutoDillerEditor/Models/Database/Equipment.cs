@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_equipments")]
-	internal class Equipment
+	public class Equipment
 	{
 		[Key]
 		[Column("e_auto_id")]

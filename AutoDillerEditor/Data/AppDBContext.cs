@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoLandProcessor.Data
 {
-	internal class AppDBContext : DbContext
+	public class AppDBContext : DbContext
 	{
 		public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
 		{

@@ -4,7 +4,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace AutoLandProcessor.ViewModels
 {
-    internal class DealersViewModel : BaseDatabaseViewModel
+    public class DealersViewModel : BaseDatabaseViewModel
 	{
 		private readonly IDealerRepository _dealerService;
 

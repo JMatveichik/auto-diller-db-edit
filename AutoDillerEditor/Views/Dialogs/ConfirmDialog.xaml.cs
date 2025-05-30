@@ -7,7 +7,7 @@ namespace AutoLandProcessor.Views
     /// <summary>
     /// Interaction logic for ConfirmDialog.xaml
     /// </summary>
-    internal partial class ConfirmDialog : Window
+    public partial class ConfirmDialog : Window
     {
         public ConfirmDialog(DialogMessageViewModel model)
         {

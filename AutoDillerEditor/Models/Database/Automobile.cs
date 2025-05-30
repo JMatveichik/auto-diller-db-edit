@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_automobiles")]
-	internal class Automobile
+	public class Automobile
 	{
 		[Key]
 		[Column("a_id")]

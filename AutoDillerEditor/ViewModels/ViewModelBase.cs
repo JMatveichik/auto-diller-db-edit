@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal abstract class ViewModelBase : ReactiveObject
+	public abstract class ViewModelBase : ReactiveObject
 	{
 		protected readonly IAppLoginStateService _appLoginState;
 

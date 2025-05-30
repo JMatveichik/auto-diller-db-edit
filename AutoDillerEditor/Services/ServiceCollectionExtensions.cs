@@ -7,7 +7,7 @@ using System.Configuration;
 
 namespace AutoLandProcessor.Services
 {
-	internal static class ServiceCollectionExtensions
+	public static class ServiceCollectionExtensions
 	{
 		public static IServiceCollection RegisterAppServices(this ServiceCollection services)
 		{

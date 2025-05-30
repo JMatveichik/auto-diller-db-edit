@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.Services
 {
-	internal class AutomobileRepository : BaseRepository, IAutomobileRepository
+	public class AutomobileRepository : BaseRepository, IAutomobileRepository
 	{
 
 		public AutomobileRepository(AppDBContext context) : base(context)

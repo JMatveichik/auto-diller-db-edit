@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_warranties")]
-	internal class Warranty
+	public class Warranty
 	{
 		[Key]
 		[Column("w_id")]

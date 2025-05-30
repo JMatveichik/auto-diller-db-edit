@@ -4,7 +4,7 @@ using System.Net;
 
 namespace AutoLandProcessor.Services
 {
-	internal interface IAutolandRepository<TModel> where TModel : class
+	public interface IAutolandRepository<TModel> where TModel : class
 	{
 		Task<IEnumerable<TModel>> GetAllAsync();
 
@@ -17,7 +17,7 @@ namespace AutoLandProcessor.Services
 		Task DeleteAsync(TModel item);
 	}
 
-	internal interface IUserRepository : IAutolandRepository<User>
+	public interface IUserRepository : IAutolandRepository<User>
 	{
 		Task<User?> LoginUser(NetworkCredential credentials);
 

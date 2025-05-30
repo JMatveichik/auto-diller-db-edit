@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoLandProcessor.Services
 {
-	internal class EquipmentRepository : BaseRepository, IEquipmentRepository
+	public class EquipmentRepository : BaseRepository, IEquipmentRepository
 	{
 		public EquipmentRepository(AppDBContext context) : base(context)
 		{

@@ -5,7 +5,7 @@ using AutoLandProcessor.Views;
 
 namespace AutoLandProcessor.Services
 {
-	internal class UserDialogService : IUserDialogService
+	public class UserDialogService : IUserDialogService
 	{
 		public Task<User?> ShowAddNewUserDialog()
 		{

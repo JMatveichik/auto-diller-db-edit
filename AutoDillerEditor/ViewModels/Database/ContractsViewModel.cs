@@ -5,7 +5,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal class ContractsViewModel : BaseDatabaseViewModel
+	public class ContractsViewModel : BaseDatabaseViewModel
 	{
 		private readonly IContractRepository _contractService;
 

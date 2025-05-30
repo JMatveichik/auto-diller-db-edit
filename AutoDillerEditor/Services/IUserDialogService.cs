@@ -2,7 +2,7 @@
 
 namespace AutoLandProcessor.Services
 {
-	internal interface IUserDialogService
+	public interface IUserDialogService
 	{
 		Task<User?> ShowAddNewUserDialog();
 

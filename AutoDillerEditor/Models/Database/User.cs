@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_users")]
-	internal class User
+	public class User
 	{
 		[Key]
 		[Column("u_id")]

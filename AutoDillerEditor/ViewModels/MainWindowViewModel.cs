@@ -6,7 +6,7 @@ using System.Net.NetworkInformation;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal class MainWindowViewModel : ViewModelBase
+	public class MainWindowViewModel : ViewModelBase
 	{
 
 		[Reactive]

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_body_type")]
-	internal class BodyType
+	public class BodyType
 	{
 		[Key]
 		[Column("bt_id")]

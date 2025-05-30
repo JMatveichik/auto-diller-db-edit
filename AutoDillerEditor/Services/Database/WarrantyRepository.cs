@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoLandProcessor.Services
 {
-	internal class WarrantyRepository : BaseRepository, IWarrantyRepository
+	public class WarrantyRepository : BaseRepository, IWarrantyRepository
 	{
 		public WarrantyRepository(AppDBContext context) : base(context)
 		{

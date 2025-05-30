@@ -3,7 +3,7 @@
 
 namespace AutoLandProcessor.Services
 {
-    internal interface IDealerRepository
+    public interface IDealerRepository
     {
 		Task<IEnumerable<Dealer>> GetAllDealersAsync();
 	}

@@ -9,7 +9,7 @@ using System.Security.Principal;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal class LoginViewModel : ViewModelBase
+	public class LoginViewModel : ViewModelBase
 	{
 		private readonly IUserRepository _userService;
 
@@ -50,7 +50,7 @@ namespace AutoLandProcessor.ViewModels
 			try
 			{
 				IsLoginInProcess = true;
-				ErrorMessage = "Авторизация...";
+				//ErrorMessage = "Авторизация...";
 
 				await Task.Delay(3000);
 

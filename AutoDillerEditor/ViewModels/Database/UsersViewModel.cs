@@ -7,7 +7,7 @@ using AutoLandProcessor.Services;
 
 namespace AutoLandProcessor.ViewModels
 {
-	internal class UsersViewModel : BaseDatabaseViewModel
+	public class UsersViewModel : BaseDatabaseViewModel
 	{
 		private readonly IUserRepository _userRepository;
 
@@ -50,22 +50,19 @@ namespace AutoLandProcessor.ViewModels
 			_userRepository = userRepository;
 			_dialogs = dialogs;
 
-			//Observable для текстового фильтра
-			var searchStream = this.WhenAnyValue(x => x.TextFilter)
-				.Throttle(TimeSpan.FromMilliseconds(500))
-				.Where(text => text?.Length >= 3 || string.IsNullOrEmpty(text));
+			//создаем поток прослушивания изменений TextFilter и RoleFilter
+			var combinedFilterStream =
+				this.WhenAnyValue( x => x.TextFilter, x => x.RoleFilter,
+					(textFilter, roleFilter) => (textFilter, roleFilter))
+					.Throttle(TimeSpan.FromMilliseconds(300))
+					.DistinctUntilChanged()
+					.Where(x => x.textFilter?.Length >= 3 || string.IsNullOrEmpty(x.textFilter))
+					.ObserveOn(RxApp.MainThreadScheduler);
 
-			//Observable для фильтра по ролям
-			var roleStream = this.WhenAnyValue(x => x.RoleFilter);
-
-			// Объединяем два Observable от текстового фильтра и филтра по ролям
-			searchStream
-				.Merge(roleStream)
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.Subscribe(async _ =>
-				{
-					Users = await SearchUsersAsync(TextFilter, RoleFilter);
-				});
+			combinedFilterStream.Subscribe(async filters =>
+			{
+				Users = await SearchUsersAsync(filters.textFilter, filters.roleFilter);
+			});
 
 			EditUserCommand		= ReactiveCommand.CreateFromTask<User>(EditUser);
 			DeleteUserCommand	= ReactiveCommand.CreateFromTask<User>(DeleteUser);

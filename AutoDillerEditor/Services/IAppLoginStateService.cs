@@ -1,17 +1,11 @@
 ﻿using AutoLandProcessor.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoLandProcessor.Services
 {
 	/// <summary>
 	/// Интерфейс сервиса для управления состоянием аутентификации пользователя
 	/// </summary>
-	internal interface IAppLoginStateService
+	public interface IAppLoginStateService
 	{
 		/// <summary>
 		/// Текущий авторизованный пользователь (null если не авторизован)

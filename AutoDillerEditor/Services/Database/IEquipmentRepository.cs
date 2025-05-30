@@ -2,7 +2,7 @@
 
 namespace AutoLandProcessor.Services
 {
-	internal interface IEquipmentRepository
+	public interface IEquipmentRepository
 	{
 		Task<IEnumerable<Equipment>> GetAllDealersAsync();
 	}

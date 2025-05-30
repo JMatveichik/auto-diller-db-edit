@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.ViewModels
 {
-    internal class WarrantiesViewModel : BaseDatabaseViewModel
+    public class WarrantiesViewModel : BaseDatabaseViewModel
 	{
 		private readonly IWarrantyRepository _warrantyService;
 

@@ -5,7 +5,7 @@ using AutoLandProcessor.Services;
 namespace AutoLandProcessor.ViewModels
 {
 
-	internal class MainContentViewModel : ViewModelBase
+	public class MainContentViewModel : ViewModelBase
 	{
 		public MainContentViewModel(UsersViewModel usersViewModel,
 									CurrentUserViewModel currentUserViewModel,

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AutoLandProcessor.Models
 {
 	[Table("au_dealers")]
-	internal class Dealer
+	public class Dealer
 	{
 		[Key]
 		[Column("d_id")]

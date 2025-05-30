@@ -2,7 +2,7 @@
 
 namespace AutoLandProcessor.Services
 {
-	internal interface IAutomobileRepository
+	public interface IAutomobileRepository
 	{
 		Task<IEnumerable<Automobile>> GetAllAutomobilesAsync();
 	}
