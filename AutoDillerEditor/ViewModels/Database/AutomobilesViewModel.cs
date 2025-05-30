@@ -20,7 +20,7 @@ namespace AutoLandProcessor.ViewModels
 
 		protected override async Task LoadAsync()
 		{
-			Automobiles = await _automobileService.GetAllAutomobilesAsync();
+			Automobiles = await _automobileService.GetAllAsync();
 		}
 
 		protected override void UpdateUIForUser(User? user)
