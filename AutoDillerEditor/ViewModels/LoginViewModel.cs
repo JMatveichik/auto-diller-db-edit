@@ -27,11 +27,13 @@ namespace AutoLandProcessor.ViewModels
 		public ReactiveCommand<Unit, Unit> LoginCommand { get; private set; }
 
 
-		public LoginViewModel(IUserRepository userService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public LoginViewModel(	IRepositoryFactory factory,
+								IAppLoginStateService appLoginState)
+								: base(appLoginState)
 		{
 
-			_userService = userService ??
-				throw new ArgumentNullException(nameof(userService));
+			_userService = factory.Users ??
+				throw new ArgumentNullException(nameof(_userService));
 
 
 			var canLogin = this.WhenAnyValue(
@@ -51,8 +53,6 @@ namespace AutoLandProcessor.ViewModels
 			{
 				IsLoginInProcess = true;
 				//ErrorMessage = "Авторизация...";
-
-				await Task.Delay(3000);
 
 				// Устанавливаем пользователя через сервис
 				_appLoginState.CurrentUser = await _userService.LoginUser(new NetworkCredential(Username, Password));

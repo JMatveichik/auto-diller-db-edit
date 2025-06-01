@@ -2,28 +2,41 @@
 using AutoLandProcessor.Services;
 using ReactiveUI.Fody.Helpers;
 
-
 namespace AutoLandProcessor.ViewModels
 {
-	public class ContractsViewModel : BaseDatabaseViewModel
+	public class ContractsViewModel : DatabaseViewModelBase<Contract>
 	{
-		private readonly IContractRepository _contractService;
+		private readonly IContractRepository _contractRepository;
 
-		[Reactive]
-		public IEnumerable<Contract> Contracts { get; private set; } = Enumerable.Empty<Contract>();
 
-		public ContractsViewModel(IContractRepository contractService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public ContractsViewModel(IRepositoryFactory factory,
+								  IAppLoginStateService appLoginState)
+									: base(factory.Contracts, appLoginState)
 		{
-			_contractService = contractService;
+			_contractRepository = factory.Contracts;
 		}
-		protected override async Task LoadAsync()
+
+		protected override Task<Contract?> ShowAddDialogAsync()
 		{
-			Contracts = await _contractService.GetAllContractsAsync();
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowDeleteConfirmAsync(Contract model)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowEditDialogAsync(Contract model)
+		{
+			throw new NotImplementedException();
 		}
 
 		protected override void UpdateUIForUser(User? user)
 		{
+			if (user != null)
+			{
 
+			}
 		}
 	}
 }

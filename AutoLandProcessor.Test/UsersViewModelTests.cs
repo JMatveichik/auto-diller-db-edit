@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace AutoLandProcessor.Test
 {
+	[TestFixture]
 	public class UsersViewModelTests
 	{
-		private Mock<IUserRepository>		_userRepoMock;
+		private Mock<IRepositoryFactory>	_userRepoMock;
 		private Mock<IUserDialogService>	_dialogServiceMock;
 		private Mock<IAppLoginStateService> _loginStateMock;
 		private UsersViewModel				_vm;
 
-		// Test users table
-		private List<User> _testUsers = new List<User>
+		// Test Items table
+		private List<User> _testItems = new List<User>
 		{
 			new User { Id = 1, Role="user", Name = "John",	Surname = "Doe",		Email = "john@mail.test" },
 			new User { Id = 2, Role="user",	Name = "Alice", Surname = "Davidson",	Email = "alice@mail.test" },
@@ -32,7 +33,7 @@ namespace AutoLandProcessor.Test
 		[SetUp]
 		public void Setup()
 		{
-			_userRepoMock		= new Mock<IUserRepository>();
+			_userRepoMock		= new Mock<IRepositoryFactory>();
 			_dialogServiceMock	= new Mock<IUserDialogService>();
 			_loginStateMock		= new Mock<IAppLoginStateService>();
 
@@ -44,7 +45,7 @@ namespace AutoLandProcessor.Test
 				.Returns(Observable.Never<User?>()); // или Observable.Return<User?>(null)
 
 			// Настройка репозитория для LoadAsync
-			_userRepoMock.Setup(x => x.GetAllAsync())
+			_userRepoMock.Setup(x => x.Users.GetAllAsync())
 				.ReturnsAsync(new List<User>());
 
 			_vm = new UsersViewModel(
@@ -58,122 +59,122 @@ namespace AutoLandProcessor.Test
 		/// Создание пустой модели (конструктор)
 		/// </summary>
 		[Test]
-		public void Constructor_InitializesWithEmptyUsers()
+		public void Constructor_InitializesWithEmptyItems()
 		{
 			_vm.TextFilter.Should().BeEmpty();
 			_vm.RoleFilter.Should().BeEmpty();
-			_vm.SelectedUser.Should().BeNull();
-			_vm.Users.Should().BeEmpty();
+			_vm.SelectedItem.Should().BeNull();
+			_vm.Items.Should().BeEmpty();
 
 			UsersViewModel.AvailableRoles.Should().Equal("Admin", "User", "Employee");
 		}
 
 
 		[Test]
-		public async Task WhenTextFilterChanges_FiltersUsersCorrectly()
+		public async Task WhenTextFilterChanges_FiltersItemsCorrectly()
 		{
 			//Arrange
 			var filter = "John";
-			var filtered = _testUsers.Where(u =>
+			var filtered = _testItems.Where(u =>
 					(u.Name?.Contains(filter, StringComparison.OrdinalIgnoreCase) == true) ||
 					(u.Surname?.Contains(filter, StringComparison.OrdinalIgnoreCase) == true) ||
 					(u.Email?.Contains(filter, StringComparison.OrdinalIgnoreCase) == true)).ToList();
 
-			_userRepoMock.Setup(x => x.FindAsync(filter, It.IsAny<string>())).ReturnsAsync(filtered);
+			_userRepoMock.Setup(x => x.Users.FindAsync(filter, It.IsAny<string>())).ReturnsAsync(filtered);
 
 			// Act
 			_vm.TextFilter = filter;
 			await Task.Delay(600); // Wait for Trottle
 
 			// Assert
-			_userRepoMock.Verify(x => x.FindAsync(filter, It.IsAny<string>()), Times.Once);
+			_userRepoMock.Verify(x => x.Users.FindAsync(filter, It.IsAny<string>()), Times.Once);
 
-			_vm.Users.Should().NotBeNull();
-			Console.WriteLine($"Users count: {_vm.Users.Count()}");
+			_vm.Items.Should().NotBeNull();
+			Console.WriteLine($"Items count: {_vm.Items.Count()}");
 
-			_vm.Users.Should().HaveCount(2);
-			_vm.Users.Should().Contain(u => u.Name == "John");
-			_vm.Users.Should().Contain(u => u.Surname == "Johnson");
-			_vm.Users.Should().Contain(u => u.Email == "john@mail.test");
-			_vm.Users.Should().NotContain(u => u.Name == "Alice");
-			_vm.Users.Should().NotContain(u => u.Name == "Jane");
+			_vm.Items.Should().HaveCount(2);
+			_vm.Items.Should().Contain(u => u.Name == "John");
+			_vm.Items.Should().Contain(u => u.Surname == "Johnson");
+			_vm.Items.Should().Contain(u => u.Email == "john@mail.test");
+			_vm.Items.Should().NotContain(u => u.Name == "Alice");
+			_vm.Items.Should().NotContain(u => u.Name == "Jane");
 		}
 
 		[Test]
-		public async Task WhenTextFilterChanges_FiltersUsersEmpty()
+		public async Task WhenTextFilterChanges_FiltersItemsEmpty()
 		{
 			//Arrange
 			var filter = "AnyTestFilter";
-			var filtered = _testUsers.Where(u =>
+			var filtered = _testItems.Where(u =>
 					(u.Name?.Contains(filter, StringComparison.OrdinalIgnoreCase) == true) ||
 					(u.Surname?.Contains(filter, StringComparison.OrdinalIgnoreCase) == true) ||
 					(u.Email?.Contains(filter, StringComparison.OrdinalIgnoreCase) == true)).ToList();
 
-			_userRepoMock.Setup(x => x.FindAsync(filter, It.IsAny<string>())).ReturnsAsync(filtered);
+			_userRepoMock.Setup(x => x.Users.FindAsync(filter, It.IsAny<string>())).ReturnsAsync(filtered);
 
 			// Act
 			_vm.TextFilter = filter;
 			await Task.Delay(600); // Wait for Trottle
 
 			// Assert
-			_userRepoMock.Verify(x => x.FindAsync(filter, It.IsAny<string>()), Times.Once);
+			_userRepoMock.Verify(x => x.Users.FindAsync(filter, It.IsAny<string>()), Times.Once);
 
-			_vm.Users.Should().NotBeNull();
-			_vm.Users.Should().HaveCount(0);
+			_vm.Items.Should().NotBeNull();
+			_vm.Items.Should().HaveCount(0);
 		}
 
 		[Test]
-		public async Task WhenRoleFilterChanges_FiltersUsersCorrectly()
+		public async Task WhenRoleFilterChanges_FiltersItemsCorrectly()
 		{
 			//Arrange
 			var filter = "user";
-			var filtered = _testUsers.Where(u => u.Role == filter).ToList();
+			var filtered = _testItems.Where(u => u.Role == filter).ToList();
 
-			_userRepoMock.Setup(x => x.FindAsync(It.IsAny<string>(), filter)).ReturnsAsync(filtered);
+			_userRepoMock.Setup(x => x.Users.FindAsync(It.IsAny<string>(), filter)).ReturnsAsync(filtered);
 
 			// Act
 			_vm.RoleFilter = filter;
 			await Task.Delay(600); // Wait for Trottle
 
 			// Assert
-			_userRepoMock.Verify(x => x.FindAsync(It.IsAny<string>(), filter), Times.Once);
+			_userRepoMock.Verify(x => x.Users.FindAsync(It.IsAny<string>(), filter), Times.Once);
 
-			_vm.Users.Should().NotBeNull();
-			_vm.Users.Should().HaveCount(3);
-			_vm.Users.Should().Contain(u => u.Name == "John");
-			_vm.Users.Should().Contain(u => u.Name == "Alice");
-			_vm.Users.Should().Contain(u => u.Name == "Jane");
-			_vm.Users.Should().NotContain(u => u.Name == "Bob");
+			_vm.Items.Should().NotBeNull();
+			_vm.Items.Should().HaveCount(3);
+			_vm.Items.Should().Contain(u => u.Name == "John");
+			_vm.Items.Should().Contain(u => u.Name == "Alice");
+			_vm.Items.Should().Contain(u => u.Name == "Jane");
+			_vm.Items.Should().NotContain(u => u.Name == "Bob");
 		}
 
 		[Test]
-		public async Task WhenRoleFilterChanges_FiltersUsersEmpty()
+		public async Task WhenRoleFilterChanges_FiltersItemsEmpty()
 		{
 			//Arrange
 			var filter = "WrongRole";
-			var filtered = _testUsers.Where(u => u.Role == filter).ToList();
+			var filtered = _testItems.Where(u => u.Role == filter).ToList();
 
-			_userRepoMock.Setup(x => x.FindAsync(It.IsAny<string>(), filter)).ReturnsAsync(filtered);
+			_userRepoMock.Setup(x => x.Users.FindAsync(It.IsAny<string>(), filter)).ReturnsAsync(filtered);
 
 			// Act
 			_vm.RoleFilter = filter;
 			await Task.Delay(600); // Wait for Trottle
 
 			// Assert
-			_userRepoMock.Verify(x => x.FindAsync(It.IsAny<string>(), filter), Times.Once);
+			_userRepoMock.Verify(x => x.Users.FindAsync(It.IsAny<string>(), filter), Times.Once);
 
-			_vm.Users.Should().NotBeNull();
-			_vm.Users.Should().HaveCount(0);
+			_vm.Items.Should().NotBeNull();
+			_vm.Items.Should().HaveCount(0);
 		}
 
 		[Test]
-		public async Task WhenRoleAndTextFilterChanges_FiltersUsersCorrectly()
+		public async Task WhenRoleAndTextFilterChanges_FiltersItemsCorrectly()
 		{
 			//Arrange
 			var roleFilter = "user";
 			var textFilter = "John";
 
-			var filtered = _testUsers.Where(u =>
+			var filtered = _testItems.Where(u =>
 							(u.Role == roleFilter) &&
 							(
 								(u.Name?.Contains(textFilter, StringComparison.OrdinalIgnoreCase) == true) ||
@@ -182,7 +183,7 @@ namespace AutoLandProcessor.Test
 							)
 						).ToList();
 
-			_userRepoMock.Setup(x => x.FindAsync(textFilter, roleFilter)).ReturnsAsync(filtered);
+			_userRepoMock.Setup(x => x.Users.FindAsync(textFilter, roleFilter)).ReturnsAsync(filtered);
 
 			// Act
 			_vm.RoleFilter = roleFilter;
@@ -190,18 +191,18 @@ namespace AutoLandProcessor.Test
 			await Task.Delay(600); // Wait for Trottle
 
 			// Assert
-			_userRepoMock.Verify(x => x.FindAsync(textFilter, roleFilter), Times.Once);
+			_userRepoMock.Verify(x => x.Users.FindAsync(textFilter, roleFilter), Times.Once);
 
-			_vm.Users.Should().NotBeNull();
-			_vm.Users.Should().HaveCount(1);
-			_vm.Users.Should().Contain(u => u.Name == "John" && u.Role == roleFilter);
+			_vm.Items.Should().NotBeNull();
+			_vm.Items.Should().HaveCount(1);
+			_vm.Items.Should().Contain(u => u.Name == "John" && u.Role == roleFilter);
 		}
 
 		[Test]
-		public async Task WhenRoleAndTextFilterEmpty_FiltersUsersCorrectly()
+		public async Task WhenRoleAndTextFilterEmpty_FiltersItemsCorrectly()
 		{
 			//Arrange
-			_userRepoMock.Setup(x => x.FindAsync("", "")).ReturnsAsync(_testUsers);
+			_userRepoMock.Setup(x => x.Users.FindAsync("", "")).ReturnsAsync(_testItems);
 
 			// Act
 			_vm.RoleFilter = "";
@@ -209,10 +210,10 @@ namespace AutoLandProcessor.Test
 			await Task.Delay(600); // Wait for Trottle
 
 			// Assert
-			_userRepoMock.Verify(x => x.FindAsync("", ""), Times.Once);
+			_userRepoMock.Verify(x => x.Users.FindAsync("", ""), Times.Once);
 
-			_vm.Users.Should().NotBeNull();
-			_vm.Users.Should().HaveCount(4);
+			_vm.Items.Should().NotBeNull();
+			_vm.Items.Should().HaveCount(4);
 		}
 
 		[Test]
@@ -223,16 +224,16 @@ namespace AutoLandProcessor.Test
 
 			_dialogServiceMock.Setup(x => x.ShowAddNewUserDialog()).ReturnsAsync(newUser);
 
-			_userRepoMock.Setup(x => x.CreateAsync(newUser)).Returns(Task.CompletedTask);
-			_userRepoMock.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<User> { newUser });
+			_userRepoMock.Setup(x => x.Users.CreateAsync(newUser)).Returns(Task.CompletedTask);
+			_userRepoMock.Setup(x => x.Users.GetAllAsync()).ReturnsAsync(new List<User> { newUser });
 
 			// Act
-			await _vm.AddUserCommand.Execute();
+			await _vm.AddCommand.Execute();
 
 			// Assert
 			_dialogServiceMock.Verify(x => x.ShowAddNewUserDialog(), Times.Once);
-			_userRepoMock.Verify(x => x.CreateAsync(newUser), Times.Once);
-			_vm.Users.Should().Contain(newUser);
+			_userRepoMock.Verify(x => x.Users.CreateAsync(newUser), Times.Once);
+			_vm.Items.Should().Contain(newUser);
 		}
 
 		[Test]
@@ -242,17 +243,17 @@ namespace AutoLandProcessor.Test
 			User? user = null;
 			_dialogServiceMock.Setup(x => x.ShowAddNewUserDialog()).ReturnsAsync(user);
 
-			_userRepoMock.Setup(x => x.CreateAsync(It.IsAny<User>())).Returns(Task.CompletedTask);
-			_userRepoMock.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<User>() );
+			_userRepoMock.Setup(x => x.Users.CreateAsync(It.IsAny<User>())).Returns(Task.CompletedTask);
+			_userRepoMock.Setup(x => x.Users.GetAllAsync()).ReturnsAsync(new List<User>() );
 
 			// Act
-			await _vm.AddUserCommand.Execute();
+			await _vm.AddCommand.Execute();
 
 			// Assert
 			_dialogServiceMock.Verify(x => x.ShowAddNewUserDialog(), Times.Once);
-			_userRepoMock.Verify(x => x.CreateAsync(It.IsAny<User>()), Times.Never);
+			_userRepoMock.Verify(x => x.Users.CreateAsync(It.IsAny<User>()), Times.Never);
 
-			_vm.Users.Should().HaveCount(0);
+			_vm.Items.Should().HaveCount(0);
 		}
 
 		[Test]
@@ -268,27 +269,27 @@ namespace AutoLandProcessor.Test
 							 .ReturnsAsync(true);
 
 			// 2. Репозиторий обновляет пользователя
-			_userRepoMock.Setup(x => x.UpdateAsync(originalUser))
+			_userRepoMock.Setup(x => x.Users.UpdateAsync(originalUser))
 						.Returns(Task.CompletedTask)
 						.Verifiable();
 
 			// 3. После LoadAsync возвращаем обновлённого пользователя
-			_userRepoMock.Setup(x => x.GetAllAsync())
+			_userRepoMock.Setup(x => x.Users.GetAllAsync())
 						.ReturnsAsync(new List<User> { updatedUser });
 
 			// Активируем команду (передаём пользователя)
-			await _vm.EditUserCommand.Execute(originalUser);
+			await _vm.EditCommand.Execute(originalUser);
 
 			// Assert
 			// 1. Проверяем вызов диалога
 			_dialogServiceMock.Verify(x => x.ShowEditUserDialog(originalUser), Times.Once);
 
 			// 2. Проверяем вызов UpdateAsync с оригинальным пользователем
-			_userRepoMock.Verify(x => x.UpdateAsync(originalUser), Times.Once);
+			_userRepoMock.Verify(x => x.Users.UpdateAsync(originalUser), Times.Once);
 
 			// 3. Проверяем, что список пользователей обновился
-			_vm.Users.Should().ContainSingle();
-			_vm.Users.First().Should().BeEquivalentTo(updatedUser);
+			_vm.Items.Should().ContainSingle();
+			_vm.Items.First().Should().BeEquivalentTo(updatedUser);
 
 		}
 
@@ -303,21 +304,21 @@ namespace AutoLandProcessor.Test
 							 .ReturnsAsync(false); // Пользователь отменил редактирование
 
 			// 2. Явно указываем, что UpdateAsync не должен вызываться
-			_userRepoMock.Setup(x => x.UpdateAsync(It.IsAny<User>()))
+			_userRepoMock.Setup(x => x.Users.UpdateAsync(It.IsAny<User>()))
 						.Verifiable();
 
 			// Act
-			await _vm.EditUserCommand.Execute(originalUser);
+			await _vm.EditCommand.Execute(originalUser);
 
 			// Assert
 			// 1. Проверяем вызов диалога
 			_dialogServiceMock.Verify(x => x.ShowEditUserDialog(originalUser), Times.Once);
 
 			// 2. Проверяем, что UpdateAsync не вызывался
-			_userRepoMock.Verify(x => x.UpdateAsync(It.IsAny<User>()), Times.Never);
+			_userRepoMock.Verify(x => x.Users.UpdateAsync(It.IsAny<User>()), Times.Never);
 
-			// 3. Проверяем, что список Users не изменился (остался пустым)
-			_vm.Users.Should().BeEmpty();
+			// 3. Проверяем, что список Items не изменился (остался пустым)
+			_vm.Items.Should().BeEmpty();
 		}
 
 		[Test]
@@ -332,26 +333,26 @@ namespace AutoLandProcessor.Test
 							 .ReturnsAsync(true);
 
 			// 2. Репозиторий удаляет пользователя
-			_userRepoMock.Setup(x => x.DeleteAsync(originalUser))
+			_userRepoMock.Setup(x => x.Users.DeleteAsync(originalUser))
 						.Returns(Task.CompletedTask)
 						.Verifiable();
 
 			// 3. После LoadAsync возвращаем пустой список
-			_userRepoMock.Setup(x => x.GetAllAsync())
+			_userRepoMock.Setup(x => x.Users.GetAllAsync())
 						.ReturnsAsync(new List<User>());
 
 			// Активируем команду (передаём пользователя)
-			await _vm.DeleteUserCommand.Execute(originalUser);
+			await _vm.DeleteCommand.Execute(originalUser);
 
 			// Assert
 			// 1. Проверяем вызов диалога
 			_dialogServiceMock.Verify(x => x.ShowDeleteUserDialog(originalUser), Times.Once);
 
 			// 2. Проверяем вызов DeleteAsync с оригинальным пользователем
-			_userRepoMock.Verify(x => x.DeleteAsync(originalUser), Times.Once);
+			_userRepoMock.Verify(x => x.Users.DeleteAsync(originalUser), Times.Once);
 
 			// 3. Проверяем, что список пользователей пустой
-			_vm.Users.Should().BeEmpty();
+			_vm.Items.Should().BeEmpty();
 		}
 
 		[Test]
@@ -366,26 +367,26 @@ namespace AutoLandProcessor.Test
 							 .ReturnsAsync(false);
 
 			// 2. Репозиторий удаляет пользователя
-			_userRepoMock.Setup(x => x.DeleteAsync(originalUser))
+			_userRepoMock.Setup(x => x.Users.DeleteAsync(originalUser))
 						.Returns(Task.CompletedTask)
 						.Verifiable();
 
 			// 3. После LoadAsync возвращаем пустой список
-			_userRepoMock.Setup(x => x.GetAllAsync())
+			_userRepoMock.Setup(x => x.Users.GetAllAsync())
 						.ReturnsAsync(new List<User>());
 
 			// Активируем команду (передаём пользователя)
-			await _vm.DeleteUserCommand.Execute(originalUser);
+			await _vm.DeleteCommand.Execute(originalUser);
 
 			// Assert
 			// 1. Проверяем вызов диалога
 			_dialogServiceMock.Verify(x => x.ShowDeleteUserDialog(originalUser), Times.Once);
 
 			// 2. Проверяем вызов DeleteAsync с оригинальным пользователем
-			_userRepoMock.Verify(x => x.DeleteAsync(originalUser), Times.Never);
+			_userRepoMock.Verify(x => x.Users.DeleteAsync(originalUser), Times.Never);
 
 			// 3. Проверяем, что список пользователей пустой
-			_vm.Users.Should().BeEmpty();
+			_vm.Items.Should().BeEmpty();
 		}
 	}
 }

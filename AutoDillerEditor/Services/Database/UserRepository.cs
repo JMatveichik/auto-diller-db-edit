@@ -5,64 +5,10 @@ using System.Net;
 
 namespace AutoLandProcessor.Services
 {
-	public class UserRepository : BaseRepository , IUserRepository
+	public class UserRepository : BaseRepository <User> , IUserRepository
 	{
 		public UserRepository(AppDBContext context) : base(context) { }
 
-		/// <summary>
-		/// Get all users from database
-		/// </summary>
-		/// <returns></returns>
-		public async Task<IEnumerable<User>> GetAllAsync()
-		{
-			return await _context.Users.ToListAsync();
-		}
-
-		/// <summary>
-		/// Get user by ID
-		/// </summary>
-		/// <param name="id">User ID</param>
-		/// <returns>User from database or null if not found</returns>
-		public async Task<User?> GetByIdAsync(int id)
-		{
-			return await _context.Users.FindAsync(id);
-		}
-
-		/// <summary>
-		/// Add new user to database
-		/// </summary>
-		/// <param name="user">New user to add</param>
-		/// <returns></returns>
-		public async Task CreateAsync(User user)
-		{
-			await _context.Users.AddAsync(user);
-			await _context.SaveChangesAsync();
-		}
-
-		/// <summary>
-		/// Update user information in database
-		/// </summary>
-		/// <param name="user">User for update</param>
-		/// <returns></returns>
-		public async Task UpdateAsync(User user)
-		{
-			_context.Users.Update(user);
-			await _context.SaveChangesAsync();
-		}
-
-		/// <summary>
-		/// Implement user deletion from the database
-		/// </summary>
-		/// <param name="user">User for deletion</param>
-		/// <returns></returns>
-		public async Task DeleteAsync(User user)
-		{
-			if (user != null)
-			{
-				_context.Users.Remove(user);
-				await _context.SaveChangesAsync();
-			}
-		}
 
 		//USER SPECIFIED METHODS
 

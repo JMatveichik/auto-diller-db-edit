@@ -2,8 +2,8 @@
 
 namespace AutoLandProcessor.Services
 {
-    public interface IWarrantyRepository
-    {
-		Task<IEnumerable<Warranty>> GetAllWarrantiesAsync();
+	public interface IWarrantyRepository : IAutolandRepository<Warranty>
+	{
+
 	}
 }

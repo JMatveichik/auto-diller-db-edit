@@ -26,7 +26,7 @@
 			<StackPanel Orientation="Horizontal"
 						DockPanel.Dock="Left">
 
-				<md:Badged Badge="{Binding Users.Count}" VerticalAlignment="Center">
+				<md:Badged Badge="{Binding Items.Count}" VerticalAlignment="Center">
 					<md:PackIcon Kind="AccountMultiple"
 							 HorizontalAlignment="Center"
 							 VerticalAlignment="Center"
@@ -63,7 +63,7 @@
 
 				<Button Style="{StaticResource MaterialDesignIconButton}"
 						Margin="5"
-						Command="{Binding Load}">
+						Command="{Binding LoadCommand}">
 					<Button.Content>
 						<md:PackIcon Kind="Reload" Width="24" Height="24"/>
 					</Button.Content>
@@ -71,7 +71,7 @@
 
 				<Button Style="{StaticResource MaterialDesignIconButton}"
 					Margin="5"
-					Command="{Binding AddUserCommand}">
+					Command="{Binding AddCommand}">
 					<Button.Content>
 						<md:PackIcon Kind="AccountsAddOutline" Width="24" Height="24"/>
 					</Button.Content>
@@ -89,8 +89,8 @@
 
 		<md:Card Grid.Row="1" Margin="2" md:ElevationAssist.Elevation="Dp4">
 			<ListView Padding="5"
-				ItemsSource="{Binding Users}"
-				SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+				ItemsSource="{Binding Items}"
+				SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
 				ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
 				<ListView.Resources>
@@ -143,7 +143,7 @@
 									<StackPanel DockPanel.Dock="Left" Style="{StaticResource InfoStackPanel}" HorizontalAlignment="Right">
 
 										<Button
-											Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+											Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
 											CommandParameter="{Binding}"
 											Style="{StaticResource MaterialDesignIconButton}" Margin="0" Width="24" Height="24">
 											<Button.Content>
@@ -152,7 +152,7 @@
 										</Button>
 
 										<Button
-											Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+											Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
 											CommandParameter="{Binding}"
 											Style="{StaticResource MaterialDesignIconButton}" Margin="0" Width="24" Height="24" VerticalAlignment="Center">
 											<Button.Content>

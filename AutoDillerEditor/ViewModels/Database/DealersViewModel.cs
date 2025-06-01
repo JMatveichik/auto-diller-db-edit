@@ -1,29 +1,41 @@
 ﻿using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
-using ReactiveUI.Fody.Helpers;
 
 namespace AutoLandProcessor.ViewModels
 {
-    public class DealersViewModel : BaseDatabaseViewModel
+    public class DealersViewModel : DatabaseViewModelBase<Dealer>
 	{
-		private readonly IDealerRepository _dealerService;
+		private readonly IDealerRepository _dealerRepository;
 
-		[Reactive]
-		public IEnumerable<Dealer> Dealers { get; private set; } = Enumerable.Empty<Dealer>();
 
-		public DealersViewModel(IDealerRepository dealerService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public DealersViewModel( IRepositoryFactory factory,
+								 IAppLoginStateService appLoginState)
+								 : base(factory.Dealers, appLoginState)
 		{
-			_dealerService = dealerService;
+			_dealerRepository = factory.Dealers;
 		}
 
-		protected override async Task LoadAsync()
+		protected override Task<Dealer?> ShowAddDialogAsync()
 		{
-			Dealers = await _dealerService.GetAllDealersAsync();
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowDeleteConfirmAsync(Dealer model)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowEditDialogAsync(Dealer model)
+		{
+			throw new NotImplementedException();
 		}
 
 		protected override void UpdateUIForUser(User? user)
 		{
-			
+			if (user != null)
+			{
+
+			}
 		}
 	}
 }

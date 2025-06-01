@@ -4,6 +4,8 @@ using AutoLandProcessor.Views;
 using Microsoft.EntityFrameworkCore;
 using AutoLandProcessor.Data;
 using System.Configuration;
+using AutoLandProcessor.Models;
+using AutoLandProcessor.Services.Database;
 
 namespace AutoLandProcessor.Services
 {
@@ -42,12 +44,7 @@ namespace AutoLandProcessor.Services
 			services.AddTransient<CurrentUserViewModel>();
 
 			//register services
-			services.AddTransient<IUserRepository, UserRepository>();
-			services.AddTransient<IAutomobileRepository, AutomobileRepository>();
-			services.AddTransient<IDealerRepository, DealerRepository>();
-			services.AddTransient<IContractRepository, ContractRepository>();
-			services.AddTransient<IEquipmentRepository, EquipmentRepository>();
-			services.AddTransient<IWarrantyRepository, WarrantyRepository>();
+			services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 			services.AddSingleton<IAppLoginStateService, AppLoginStateService>();
 			services.AddSingleton<IUserDialogService, UserDialogService>();
 

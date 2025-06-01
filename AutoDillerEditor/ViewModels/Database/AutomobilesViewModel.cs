@@ -1,31 +1,41 @@
 ﻿using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
-using ReactiveUI.Fody.Helpers;
-
 
 namespace AutoLandProcessor.ViewModels
 {
-	public class AutomobilesViewModel : BaseDatabaseViewModel
+	public class AutomobilesViewModel : DatabaseViewModelBase<Automobile>
 	{
-		private readonly IAutomobileRepository _automobileService;
-
-		[Reactive]
-		public IEnumerable<Automobile> Automobiles { get; private set; } = Enumerable.Empty<Automobile>();
+		private readonly IAutomobileRepository _automobileRepository;
 
 
-		public AutomobilesViewModel(IAutomobileRepository automobileService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public AutomobilesViewModel(IRepositoryFactory factory,
+									IAppLoginStateService appLoginState)
+									: base(factory.Automobiles, appLoginState)
 		{
-			_automobileService = automobileService;
+			_automobileRepository = factory.Automobiles;
 		}
 
-		protected override async Task LoadAsync()
+		protected override Task<Automobile?> ShowAddDialogAsync()
 		{
-			Automobiles = await _automobileService.GetAllAsync();
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowDeleteConfirmAsync(Automobile model)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowEditDialogAsync(Automobile model)
+		{
+			throw new NotImplementedException();
 		}
 
 		protected override void UpdateUIForUser(User? user)
 		{
+			if (user != null)
+			{
 
+			}
 		}
 	}
 }

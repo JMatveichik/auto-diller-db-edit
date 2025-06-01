@@ -1,34 +1,41 @@
 ﻿using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
-using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoLandProcessor.ViewModels
 {
-	public class EquipmentsViewModel : BaseDatabaseViewModel
+	public class EquipmentsViewModel : DatabaseViewModelBase<Equipment>
 	{
-		private readonly IEquipmentRepository _equipService;
+		private readonly IEquipmentRepository _equipmentRepository;
 
-		[Reactive]
-		public IEnumerable<Equipment> Equipments { get; private set; } = Enumerable.Empty<Equipment>();
 
-		public EquipmentsViewModel(IEquipmentRepository equipService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public EquipmentsViewModel(IRepositoryFactory factory,
+								 IAppLoginStateService appLoginState)
+								 : base(factory.Equipments, appLoginState)
 		{
-			_equipService = equipService;
+			_equipmentRepository = factory.Equipments;
 		}
 
-		protected override async Task LoadAsync()
+		protected override Task<Equipment?> ShowAddDialogAsync()
 		{
-			Equipments = await _equipService.GetAllDealersAsync();
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowDeleteConfirmAsync(Equipment model)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowEditDialogAsync(Equipment model)
+		{
+			throw new NotImplementedException();
 		}
 
 		protected override void UpdateUIForUser(User? user)
 		{
+			if (user != null)
+			{
 
+			}
 		}
 	}
 }

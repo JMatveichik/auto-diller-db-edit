@@ -1,115 +1,72 @@
-﻿using ReactiveUI;
-using System.Reactive.Linq;
-using ReactiveUI.Fody.Helpers;
-using System.Reactive;
-using AutoLandProcessor.Models;
+﻿using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System.Reactive.Linq;
 
 namespace AutoLandProcessor.ViewModels
 {
-	public class UsersViewModel : BaseDatabaseViewModel
+	public class UsersViewModel : DatabaseViewModelBase<User>
 	{
-		private readonly IUserRepository _userRepository;
+		#region Private fields
 
+		private readonly IUserRepository _userRepository;
 		private readonly IUserDialogService _dialogs;
 
-		[Reactive]
-		public IEnumerable<User> Users { get; private set; } = Enumerable.Empty<User>();
+		#endregion
 
-		[Reactive]
-		public User? SelectedUser { get; set; } = null;
-
+		#region Public properties
 		[Reactive]
 		public string TextFilter { get; set; } = string.Empty;
 
 		[Reactive]
 		public string RoleFilter { get; set; } = string.Empty;
 
-		public static List<string> AvailableRoles { get; private set; } = new() { "Admin", "User", "Employee" };
+		public static List<string> AvailableRoles { get; } = new() { "Admin", "User", "Employee" };
 
-		/// <summary>
-		///Команда редактирования пользователя
-		/// </summary>
-		public ReactiveCommand<User, Unit> EditUserCommand { get; private set; }
+		#endregion
 
-		/// <summary>
-		///Команда удаления пользователя
-		/// </summary>
-		public ReactiveCommand<User, Unit> DeleteUserCommand { get; private set; }
-
-		/// <summary>
-		///Команда добавления нового пользователя
-		/// </summary>
-		public ReactiveCommand<Unit, Unit> AddUserCommand { get; private set; }
-
-
-		public UsersViewModel(	IUserRepository userRepository,
+		#region Constructors
+		public UsersViewModel(	IRepositoryFactory factory,
 								IUserDialogService dialogs,
-								IAppLoginStateService appLoginState) : base(appLoginState)
+								IAppLoginStateService appLoginState)
+								: base(factory.Users, appLoginState)
 		{
-			_userRepository = userRepository;
+			_userRepository = factory.Users;
 			_dialogs = dialogs;
 
-			//создаем поток прослушивания изменений TextFilter и RoleFilter
-			var combinedFilterStream =
-				this.WhenAnyValue( x => x.TextFilter, x => x.RoleFilter,
-					(textFilter, roleFilter) => (textFilter, roleFilter))
-					.Throttle(TimeSpan.FromMilliseconds(300))
-					.DistinctUntilChanged()
-					.Where(x => x.textFilter?.Length >= 3 || string.IsNullOrEmpty(x.textFilter))
-					.ObserveOn(RxApp.MainThreadScheduler);
-
-			combinedFilterStream.Subscribe(async filters =>
-			{
-				Users = await SearchUsersAsync(filters.textFilter, filters.roleFilter);
-			});
-
-			EditUserCommand		= ReactiveCommand.CreateFromTask<User>(EditUser);
-			DeleteUserCommand	= ReactiveCommand.CreateFromTask<User>(DeleteUser);
-			AddUserCommand	    = ReactiveCommand.CreateFromTask(AddUser);
+			// Автоматический фильтр по тексту и роли
+			this.WhenAnyValue(x => x.TextFilter, x => x.RoleFilter)
+				.Throttle(TimeSpan.FromMilliseconds(300))
+				.DistinctUntilChanged()
+				.Where(x => x.Item1.Length >= 3 || string.IsNullOrEmpty(x.Item1))
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.Subscribe(async filters =>
+				{
+					Items = await _userRepository.FindAsync(filters.Item1, filters.Item2);
+				});
 		}
 
-		protected override async Task LoadAsync()
-		{
-			Users = await _userRepository.GetAllAsync();
-		}
+		#endregion
 
-		protected async Task<IEnumerable<User>> SearchUsersAsync(string filter, string role)
-		{
-			return await _userRepository.FindAsync(filter, role);
-		}
+		#region User Dialogs
+		protected override Task<User?> ShowAddDialogAsync() =>
+			_dialogs.ShowAddNewUserDialog();
 
-		private async Task AddUser()
-		{
-			var newUser = await _dialogs.ShowAddNewUserDialog();
-			if (newUser != null)
-			{
-				await _userRepository.CreateAsync(newUser);
-				await LoadAsync();
-			}
-		}
+		protected override Task<bool> ShowEditDialogAsync(User model) =>
+			_dialogs.ShowEditUserDialog(model);
 
-		private async Task EditUser(User user)
-		{
-			if (await _dialogs.ShowEditUserDialog(user))
-			{
-				await _userRepository.UpdateAsync(user);
-				await LoadAsync();
-			}
-		}
+		protected override Task<bool> ShowDeleteConfirmAsync(User model) =>
+			_dialogs.ShowDeleteUserDialog(model);
 
-		private async Task DeleteUser(User user)
-		{
-			if (await _dialogs.ShowDeleteUserDialog(user))
-			{
-				await _userRepository.DeleteAsync(user);
-				await LoadAsync();
-			}
-		}
+		#endregion
 
 		protected override void UpdateUIForUser(User? user)
 		{
+			if (user != null)
+			{
+
+			}
 		}
 	}
 }
-

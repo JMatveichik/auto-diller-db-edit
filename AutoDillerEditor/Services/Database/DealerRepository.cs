@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoLandProcessor.Services
 {
-	public class DealerRepository : BaseRepository,  IDealerRepository
+	public class DealerRepository : BaseRepository<Dealer>,  IDealerRepository
 	{
 		public DealerRepository(AppDBContext context) : base(context) { }
 

@@ -2,8 +2,8 @@
 
 namespace AutoLandProcessor.Services
 {
-    public interface IContractRepository
-    {
-		Task<IEnumerable<Contract>> GetAllContractsAsync();
+	public interface IContractRepository : IAutolandRepository<Contract>
+	{
+
 	}
 }

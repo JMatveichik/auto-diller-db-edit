@@ -9,13 +9,13 @@ namespace AutoLandProcessor.Data
 		{
 		}
 
-		public DbSet<User> Users { get; set; }
-		public DbSet<Automobile> Automobiles { get; set; }
-		public DbSet<BodyType> BodyTypes { get; set; }
-		public DbSet<Contract> Contracts { get; set; }
-		public DbSet<Dealer> Dealers { get; set; }
-		public DbSet<Equipment> Equipments { get; set; }
-		public DbSet<Warranty> Warranties { get; set; }
+		public DbSet<User>			Users { get; set; }
+		public DbSet<Automobile>	Automobiles { get; set; }
+		public DbSet<BodyType>		BodyTypes { get; set; }
+		public DbSet<Contract>		Contracts { get; set; }
+		public DbSet<Dealer>		Dealers { get; set; }
+		public DbSet<Equipment>		Equipments { get; set; }
+		public DbSet<Warranty>		Warranties { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -30,7 +30,7 @@
 				 Orientation="Horizontal"
 				 DockPanel.Dock="Right">
 
-				<Button Content="Load" Margin="5" Command="{Binding Load}"/>
+				<Button Content="Load" Margin="5" Command="{Binding LoadCommand}"/>
 				<Button Content="Save" Margin="5"/>
 				<Button Content="Add"  Margin="5"/>
 
@@ -38,7 +38,7 @@
 		</DockPanel>
 
 		<DataGrid Grid.Row="1"
-				  ItemsSource="{Binding Dealers}"
+				  ItemsSource="{Binding Items}"
 				  AutoGenerateColumns="True">
 
 		</DataGrid>

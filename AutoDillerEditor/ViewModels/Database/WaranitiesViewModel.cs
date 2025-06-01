@@ -1,37 +1,40 @@
 ﻿using AutoLandProcessor.Models;
 using AutoLandProcessor.Services;
-using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoLandProcessor.ViewModels
 {
-    public class WarrantiesViewModel : BaseDatabaseViewModel
+    public class WarrantiesViewModel : DatabaseViewModelBase<Warranty>
 	{
-		private readonly IWarrantyRepository _warrantyService;
+		private readonly IWarrantyRepository _warrantyRepository;
 
-		[Reactive]
-		public IEnumerable<Warranty> Warranties { get; private set; } = Enumerable.Empty<Warranty>();
-
-		[Reactive]
-		public Warranty? SelectedWarranty { get; set; } = null;
-
-
-		public WarrantiesViewModel(IWarrantyRepository warrantyService, IAppLoginStateService appLoginState) : base(appLoginState)
+		public WarrantiesViewModel(IRepositoryFactory factory,
+								 IAppLoginStateService appLoginState)
+								 : base(factory.Warranties, appLoginState)
 		{
-			_warrantyService = warrantyService;
+			_warrantyRepository = factory.Warranties;
 		}
 
-		protected override async Task LoadAsync()
+		protected override Task<Warranty?> ShowAddDialogAsync()
 		{
-			Warranties = await _warrantyService.GetAllWarrantiesAsync();
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowDeleteConfirmAsync(Warranty model)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override Task<bool> ShowEditDialogAsync(Warranty model)
+		{
+			throw new NotImplementedException();
 		}
 
 		protected override void UpdateUIForUser(User? user)
 		{
+			if (user != null)
+			{
+
+			}
 		}
 	}
 }

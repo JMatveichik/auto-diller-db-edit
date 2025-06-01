@@ -1,23 +1,14 @@
 ﻿using AutoLandProcessor.Data;
 using AutoLandProcessor.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoLandProcessor.Services
 {
-	public class ContractRepository : BaseRepository, IContractRepository
+	public class ContractRepository : BaseRepository<Contract>, IContractRepository
 	{
 		public ContractRepository(AppDBContext context) : base(context)
 		{
 		}
 
-		public async Task<IEnumerable<Contract>> GetAllContractsAsync()
-		{
-			return await _context.Contracts.ToListAsync();
-		}
+
 	}
 }
